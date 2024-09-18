@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    background-color: #F3F4F6;
+}
+.hex-background {
+    background: url('/src/assets/react.svg');
+    background-size: 101%;
+    background-repeat: no-repeat;
+    color: #fff;
+    background-color: #F3F4F6;
+}
+
+/* Para pantallas grandes (cuando no es móvil) */
+@media (min-width: 768px) {
+    .hex-background {
+        background-position: center, 50%;
+    }
+}
+
+.home{
+    background: url('/src/assets/react.svg');
+    background-size: 101%;
+    background-repeat: no-repeat;
+    color: #fff;
+    background-color: #F3F4F6;
+    background-position: bottom, 50%;
+}
