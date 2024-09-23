@@ -7,10 +7,12 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://www.dcoapi.somee.com',
+        target: 'http://localhost:8080/http://www.dcoapi.somee.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''), // Elimina el prefijo /api en las solicitudes
+        secure: false,
       },
     },
   },
 });
+

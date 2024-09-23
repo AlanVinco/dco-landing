@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 const isAuthenticated = () => {
     // Aquí puedes poner la lógica real de autenticación,
     // como verificar un token en el localStorage o en un contexto.
-    return localStorage.getItem("authToken") !== null;
+    return localStorage.getItem("user") !== null;
 };
 
 const ProtectedRoute = ({ element }) => {

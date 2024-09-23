@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVideos } from "../redux/actions/videosSlice";
+import { fetchVideos, insertVideo } from "../redux/actions/videosSlice";
+import Modal from "../components/Modal";
 
 const Videos = () => {
   const dispatch = useDispatch();
   const { data: videos, status, error } = useSelector((state) => state.videos);
-
+  const [isModalOpen, setModalOpen] = useState(false);
+  
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchVideos()); // Despachar la acción para obtener los videos
+      dispatch(fetchVideos());
     }
   }, [status, dispatch]);
 
@@ -20,18 +22,35 @@ const Videos = () => {
     return <div className="text-center text-red-500">Error: {error}</div>;
   }
 
-  // Filtrar los videos para que solo aparezcan los que empiezan con 'https://www.youtube.com'
-  const videosFiltrados = videos.filter(video => video.video.startsWith("https://www.youtube.com"));
+  const handleAddVideo = (nombre, videoUrl) => {
+    const newVideo = {
+      nombre: nombre,
+      video: videoUrl
+    };
+    dispatch(insertVideo(newVideo)); // Despacha la acción para agregar un nuevo video
+    setModalOpen(false); // Cierra el modal después de insertar
+  };
 
   return (
     <div>
       <div className="hero-content flex-col lg:flex-row card glass">
         <div className="carousel carousel-vertical rounded-box h-96">
-          {videosFiltrados.map((video, index) => (
+          {videos.filter(video => video.video.startsWith("https://www.youtube.com")).map((video, index) => (
             <LazyLoadIframe key={index} src={video.video} />
           ))}
         </div>
       </div>
+
+      <div className="mt-4">
+        <button
+          className="btn btn-primary"
+          onClick={() => setModalOpen(true)}
+        >
+          Agregar Nuevo Video
+        </button>
+      </div>
+
+      {isModalOpen && <Modal onClose={() => setModalOpen(false)} onSubmit={handleAddVideo} fetchTable={fetchVideos()} />}
     </div>
   );
 };
@@ -47,11 +66,11 @@ const LazyLoadIframe = ({ src }) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            observer.disconnect(); // Deja de observar una vez que se ha cargado el iframe
+            observer.disconnect();
           }
         });
       },
-      { threshold: 0.1 } // Ajusta el umbral según sea necesario
+      { threshold: 0.1 }
     );
 
     if (iframeRef.current) {

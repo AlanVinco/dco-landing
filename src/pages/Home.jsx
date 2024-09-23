@@ -1,6 +1,33 @@
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../redux/actions/authSlice";
+
 import logo from "../assets/dco-hd-sinfondo.png";
 
 const Home = () => {
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("user");
+    if (token) {
+      dispatch(login());
+      navigate("/dashboard");
+    } else {
+      dispatch(logout());
+      // navigate("/login");
+    }
+  }, [dispatch, navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <div className="bg-[#06938D]">
       <div className="">
@@ -33,49 +60,49 @@ const Home = () => {
               className="menu menu-sm dropdown-content bg-[#06938D] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-              <a>Inicio</a>
-            </li>
-            <li>
-              <details>
-                <summary>Torneos</summary>
-                <ul className="p-2 bg-[#06938D]">
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Equipos</summary>
-                <ul className="p-2 bg-[#06938D]">
-                  <li>
-                    <a>Equipo</a>
-                  </li>
-                  <li>
-                    <a>Equipo</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Administración</a>
-            </li>
-            <li>
-              <a>Correciónes</a>
-            </li>
-            <li>
-              <a>Patrocinadores</a>
-            </li>
-            <li>
-              <a>Servicios</a>
-            </li>
-            <li>
-              <a>Videos</a>
-            </li>
+                <a>Inicio</a>
+              </li>
+              <li>
+                <details>
+                  <summary>Torneos</summary>
+                  <ul className="p-2 bg-[#06938D]">
+                    <li>
+                      <a>Torneo</a>
+                    </li>
+                    <li>
+                      <a>Torneo</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary>Equipos</summary>
+                  <ul className="p-2 bg-[#06938D]">
+                    <li>
+                      <a>Equipo</a>
+                    </li>
+                    <li>
+                      <a>Equipo</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <a>Administración</a>
+              </li>
+              <li>
+                <a>Correciónes</a>
+              </li>
+              <li>
+                <a>Patrocinadores</a>
+              </li>
+              <li>
+                <a>Servicios</a>
+              </li>
+              <li>
+                <a>Videos</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -128,7 +155,18 @@ const Home = () => {
           </ul>
         </div>
         <div className="navbar-end">
-            <button className="btn btn-outline btn-accent bg-[#F3F4F6]">Cerrar Sesión</button>
+          {isAuthenticated ? (
+            <button
+              onClick={handleLogout}
+              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+            >
+              Cerrar Sesión
+            </button>
+          ) : (
+            <Link to="/login" className="btn btn-outline btn-accent bg-[#F3F4F6]">
+              Iniciar Sesión
+            </Link>
+          )}
         </div>
       </div>
 

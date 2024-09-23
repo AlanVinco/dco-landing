@@ -1,49 +1,69 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Definir una acción asíncrona usando createAsyncThunk
+// Acción asíncrona para obtener los videos
 export const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
   async () => {
-    // Hacer la solicitud HTTP utilizando la URL proxy
-    const response = await fetch('/api/api/ObtenerDatos/ObtenerVideos');
-    
-    // Verifica si la respuesta es correcta antes de parsear el JSON
+    const response = await fetch('http://localhost:8080/https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerVideos');
     if (!response.ok) {
-      throw new Error('Error al obtener los equipos');
+      throw new Error('Error al obtener los videos');
     }
-    
-    // Parsear la respuesta como JSON
     const data = await response.json();
-    
-    // Retornar los datos que serán gestionados por Redux
     return data;
   }
 );
 
-// Crear el slice para gestionar el estado de equipos
+// Acción asíncrona para insertar un nuevo video
+export const insertVideo = createAsyncThunk(
+  'videos/insertVideo',
+  async (newVideo, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:8080/https://www.dcoapi.somee.com/api/EnviarDatos/InsertaVideo_5_', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newVideo), // Enviar el nuevo video como JSON
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al insertar el video');
+      }
+
+      const data = await response.json();
+      return data; // Retorna la respuesta de la API
+    } catch (error) {
+      return rejectWithValue(error.message); // Maneja el error
+    }
+  }
+);
+
+// Slice para gestionar el estado de los videos
 const videosSlice = createSlice({
   name: 'videos',
   initialState: {
-    data: [], // Estado inicial de los datos de equipos
-    status: 'idle', // idle, loading, succeeded, failed
-    error: null, // Almacena cualquier error
+    data: [],
+    status: 'idle',
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchVideos.pending, (state) => {
-        state.status = 'loading'; // Cambia el estado cuando está cargando
+        state.status = 'loading';
       })
       .addCase(fetchVideos.fulfilled, (state, action) => {
-        state.status = 'succeeded'; // Indica que se obtuvieron los datos correctamente
-        state.data = action.payload; // Almacena los datos obtenidos
+        state.status = 'succeeded';
+        state.data = action.payload;
       })
       .addCase(fetchVideos.rejected, (state, action) => {
-        state.status = 'failed'; // Indica que hubo un error
-        state.error = action.error.message; // Almacena el mensaje de error
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(insertVideo.fulfilled, (state, action) => {
+        state.data.push(action.payload); // Agrega el nuevo video a la lista
       });
   },
 });
 
-// Exportar el reducer para configurarlo en el store
 export default videosSlice.reducer;
