@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchVideos = createAsyncThunk(
   'videos/fetchVideos',
   async () => {
-    const response = await fetch('http://localhost:8080/https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerVideos');
+    const response = await fetch('https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerVideos');
     if (!response.ok) {
       throw new Error('Error al obtener los videos');
     }
@@ -18,7 +18,7 @@ export const insertVideo = createAsyncThunk(
   'videos/insertVideo',
   async (newVideo, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:8080/https://www.dcoapi.somee.com/api/EnviarDatos/InsertaVideo_5_', {
+      const response = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/InsertaVideo_5_', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

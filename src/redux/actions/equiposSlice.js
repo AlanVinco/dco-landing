@@ -5,7 +5,7 @@ export const fetchEquipos = createAsyncThunk(
   'equipos/fetchEquipos',
   async () => {
     // Hacer la solicitud HTTP utilizando la URL proxy de CORS Anywhere
-    const response = await fetch('http://localhost:8080/https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos');
+    const response = await fetch('https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos');
     
     // Verifica si la respuesta es correcta antes de parsear el JSON
     if (!response.ok) {

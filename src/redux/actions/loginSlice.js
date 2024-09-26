@@ -6,7 +6,7 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       // Aquí usa el proxy /api para evitar problemas de CORS
-      const response = await fetch('/api/api/EnviarDatos/ValidaUsuario_1_1', {
+      const response = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/ValidaUsuario_1_1', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
