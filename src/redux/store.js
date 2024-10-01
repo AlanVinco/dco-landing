@@ -7,7 +7,8 @@ import loginReducer from './actions/loginSlice';
 import torneosReducer from './actions/torneosSlice';
 import adminReducer  from './actions/adminSlice';
 import modalReducer from "./actions/modalSlice";
-
+import correcionesReducer from "./actions/correcionesSlice";
+import noticiasReducer from "./actions/noticiasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,7 @@ export const store = configureStore({
     torneos: torneosReducer,
     admin: adminReducer,
     modal: modalReducer,
+    correcciones:correcionesReducer,
+    noticias: noticiasReducer,
   },
 });

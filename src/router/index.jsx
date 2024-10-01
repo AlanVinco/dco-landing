@@ -10,6 +10,7 @@ import Equipos from "../pages/Equipos";
 import Patrocinadores from "../pages/Patrocinadores";
 import Servicios from "../pages/Servicios";
 import Videos from "../pages/Videos";
+import Inicio from "../pages/Inicio";
 
 
 import DashboardLayout from "../components/DashboardLayout ";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <ProtectedRoute element={<DashboardLayout />} />, // Ruta protegida con layout
         children: [
+            {
+                path: "home",
+                element: <Inicio />
+            },
             {
                 path: "torneos",
                 element: <Torneos />, // Se renderiza dentro de DashboardLayout

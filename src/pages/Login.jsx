@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser({ alias, contrasenia })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
-        navigate('/dashboard'); // Redirige si el login es exitoso
+        navigate('/dashboard/home'); // Redirige si el login es exitoso
       }
     });
   };
