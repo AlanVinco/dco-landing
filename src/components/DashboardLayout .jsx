@@ -109,7 +109,7 @@ const DashboardLayout = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-white">
             <li>
-              <Link to="/dashboard/home">Inicio</Link>
+              <Link to="/dashboard">Inicio</Link>
             </li>
             <li>
               {/* <details>

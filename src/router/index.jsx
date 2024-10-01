@@ -12,13 +12,35 @@ import Servicios from "../pages/Servicios";
 import Videos from "../pages/Videos";
 import Inicio from "../pages/Inicio";
 
-
 import DashboardLayout from "../components/DashboardLayout ";
+import PublicLayout from "../components/PublicLayout";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: <PublicLayout />,
+        children: [
+            {
+                path: "/",
+                element: <Inicio />
+            },
+            {
+                path: "torneos",
+                element: <Torneos />, // Se renderiza dentro de DashboardLayout
+            },
+            {
+                path: "patrocinadores",
+                element: <Patrocinadores />, // Se renderiza dentro de DashboardLayout
+            },
+            {
+                path: "servicios",
+                element: <Servicios />, // Se renderiza dentro de DashboardLayout
+            },
+            {
+                path: "videos",
+                element: <Videos />, // Se renderiza dentro de DashboardLayout
+            },
+        ],
     },
     {
         path: "/login",
@@ -29,7 +51,7 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute element={<DashboardLayout />} />, // Ruta protegida con layout
         children: [
             {
-                path: "home",
+                path: "/dashboard",
                 element: <Inicio />
             },
             {
