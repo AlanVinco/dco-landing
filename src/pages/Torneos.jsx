@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategorias, fetchEquipos, fetchTorneos, fetchCalendario, setSelectedCategoria, setSelectedTorneo, 
   fetchTablaGeneralVacia, fetchTablaGeneral, fetchTablaGoleoIndividual, fetchCalendarioGoleo} from '../redux/actions/torneosSlice';
@@ -7,7 +7,7 @@ const Torneos = () => {
   const dispatch = useDispatch();
   const {
     categorias, equipos, torneos, calendario, selectedCategoria, selectedTorneo,
-    loading, idCategoria, idTorneo, tablaGeneral, tablaGeneralVacia,
+    loading, tablaGeneral, tablaGeneralVacia,
     tablaGoleoIndividual, calendarioGoleo
   } = useSelector((state) => state.torneos);
 
@@ -63,7 +63,7 @@ const Torneos = () => {
       {loading && <p>Cargando...</p>}
 
       <div className="mb-4">
-        <label className="block mb-2 text-sm font-bold text-gray-700 text-white">Categorías</label>
+        <label className="block mb-2 text-sm font-bold text-white">Categorías</label>
         <select
           className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
           onChange={handleCategoriaChange}

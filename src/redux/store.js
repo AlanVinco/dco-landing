@@ -5,6 +5,9 @@ import videosReducer from './actions/videosSlice';
 import authReducer from "./actions/authSlice";
 import loginReducer from './actions/loginSlice';
 import torneosReducer from './actions/torneosSlice';
+import adminReducer  from './actions/adminSlice';
+import modalReducer from "./actions/modalSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +16,7 @@ export const store = configureStore({
     auth: authReducer,
     login: loginReducer,
     torneos: torneosReducer,
+    admin: adminReducer,
+    modal: modalReducer,
   },
 });

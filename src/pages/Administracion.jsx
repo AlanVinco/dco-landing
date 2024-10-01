@@ -1,60 +1,46 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchVideos } from "../redux/actions/videosSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import ModalLoad from "../components/ModalLoad";
+import { setModalContent } from "../redux/actions/modalSlice";// Importamos la acción del slice
 
-function Administracion() {
+const options = [
+  "Registrar Categoría",
+  "Registrar Torneo",
+  "Registrar Equipo",
+  "Registrar Jugador",
+  "Ingresar Partido",
+  "Registrar Resultado",
+  "Registrar Goleo Individual",
+  "Registrar Goleo Total"
+];
+
+const AdminSelector = () => {
+  const [selectedOption, setSelectedOption] = useState("");
   const dispatch = useDispatch();
-  const {
-    data: videos,
-    status,
-    error,
-  } = useSelector((state) => state.videos);
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchVideos()); // Despachar la acción para obtener los videos
-    }
-  }, [status, dispatch]);
-
-  if (status === "loading") {
-    return <div className="text-center">Cargando...</div>;
-  }
-
-  if (status === "failed") {
-    return <div className="text-center text-red-500">Error: {error}</div>;
-  }
+  const handleOptionChange = (event) => {
+    const option = event.target.value;
+    setSelectedOption(option);
+    // Dispatch para mostrar el modal con la categoría seleccionada
+    dispatch(setModalContent(option));
+  };
 
   return (
-    <div>
-      <div className="hero-content flex-col lg:flex-row card glass">
-        <div className="text-white">
-          <div className="overflow-x-auto">
-            <table className="table">
-              {/* head */}
-              <thead>
-                <tr className="text-[#06938D] font-bold text-base">
-                  <th></th>
-                  <th>Nombre</th>
-                  <th>Categoria</th>
-                  <th>Torneos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {videos.map((equipo, index) => (
-                  <tr key={index} className="p-2 border-b last:border-none">
-                    <th>1</th>
-                    <th>{equipo.nombre}</th>
-                    <th>{equipo.idCategoria}</th>
-                    <th>{equipo.numeroTorneos}</th>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div className="admin-selector">
+      <select value={selectedOption} onChange={handleOptionChange}>
+        <option value="" disabled>
+          Selecciona una opción
+        </option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      {/* Modal */}
+      <ModalLoad selectedOption={selectedOption} />
     </div>
   );
-}
+};
 
-export default Administracion;
+export default AdminSelector;
