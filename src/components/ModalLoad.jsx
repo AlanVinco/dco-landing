@@ -7,6 +7,7 @@ import {
   registrarJugador,
   relacionarJugadorEquipo,
   registrarPartido,
+  registrarResultado,
 } from "../redux/actions/adminSlice"; // Acciones de redux para realizar los POST
 
 const ModalLoad = ({ selectedOption }) => {
@@ -200,7 +201,10 @@ const ModalLoad = ({ selectedOption }) => {
 
   // Fetch categorías al montar el componente (para seleccionar categoría)
   useEffect(() => {
-    if (selectedOption === "Ingresar Partido") {
+    if (
+      selectedOption === "Ingresar Partido" ||
+      selectedOption === "Registrar Resultado"
+    ) {
       fetch(
         "https://www.dcoapi.somee.com/api/ObtenerDatos/MostrarCategorias?idLiga=4"
       )
@@ -265,6 +269,60 @@ const ModalLoad = ({ selectedOption }) => {
       alert("Todos los campos son requeridos.");
     }
   };
+
+  //REGISTRAR RESULTADO
+  // Estado para Registrar Resultado
+  const [resultadoData, setResultadoData] = useState({
+    idPartido: "",
+    golesLocal: "",
+    golesVisita: "",
+    idEquipoLocal: "",
+    idEquipoVisita: "",
+    idTorneo: "",
+  });
+
+  const [partidos, setPartidos] = useState([]); // Para listar partidos disponibles
+
+  // Fetch para obtener jugadores cuando se selecciona un partido
+  const handlePartidoChange = (e) => {
+    const idTorneo = e.target.value;
+    setResultadoData({ ...resultadoData, idTorneo });
+
+    // Obtener jugadores según el partido
+    fetch(
+      `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendario?idTorneo=${idTorneo}`
+    )
+      .then((res) => res.json())
+      .then((data) => setPartidos(data));
+  };
+
+  // Manejar el cambio de los campos del resultado
+  const handleResultadoInputChange = (e) => {
+    const { name, value } = e.target;
+    setResultadoData({ ...resultadoData, [name]: value });
+  };
+
+  // Manejar el envío del formulario para registrar el resultado
+const handleSubmitResultado = () => {
+  const { idPartido, golesLocal, golesVisita, idEquipoLocal, idEquipoVisita, idTorneo } = resultadoData;
+
+  if (idPartido !== "" && golesLocal !== "" && golesVisita !== "" && idEquipoLocal !== "" && 
+  idEquipoVisita !== "" && idTorneo !== "") {
+    dispatch(registrarResultado(resultadoData)).then((response) => {
+      // if (response.payload.success) {
+      //   alert("Resultado registrado con éxito");
+      //   // Limpiar formulario o cerrar modal
+      // } else {
+      //   alert("Hubo un error al registrar el resultado");
+      // }
+      console.log("se enviaron")
+    });
+  } else {
+    alert("Todos los campos son requeridos.");
+  }
+};
+
+  console.log(resultadoData);
 
   return (
     <div>
@@ -560,6 +618,83 @@ const ModalLoad = ({ selectedOption }) => {
 
           <button className="text-white" onClick={handleSubmitPartido}>
             Registrar Partido
+          </button>
+        </div>
+      )}
+
+      {selectedOption === "Registrar Resultado" && (
+        <div>
+          <h2 className="text-white">Registrar Resultado</h2>
+
+          <select onChange={handleCategoriaChangePartido}>
+            <option value="" disabled>
+              Selecciona categoría
+            </option>
+            {categorias.map((categoria, index) => (
+              <option key={index} value={categoria.idCategoria}>
+                {categoria.categoria}
+              </option>
+            ))}
+          </select>
+
+          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
+            <option value="" disabled>
+              Selecciona Torneo
+            </option>
+            {torneos.map((torneo, index) => (
+              <option key={index} value={torneo.idTorneo}>
+                {torneo.nombre}
+              </option>
+            ))}
+          </select>
+
+          {resultadoData.idTorneo !== "" && (
+            <div>
+              <select
+                value={resultadoData.idPartido}
+                onChange={(e) =>
+                  setResultadoData({
+                    ...resultadoData,
+                    idPartido: e.target.value.split("-")[0],
+                    idEquipoLocal: e.target.value.split("-")[1],
+                    idEquipoVisita: e.target.value.split("-")[2],
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Torneo
+                </option>
+                {partidos.map((partido) => (
+                  <option
+                    key={partido.idPartido}
+                    value={`${partido.idPartido}-${partido.idEquipoLocal}-${partido.idEquipoVisita}`}
+                  >
+                    {partido.nombreEquipoLocal} vs {partido.nombreEquipoVisita}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {resultadoData.idPartido !== "" && (
+            <div>
+              <input
+                type="number"
+                name="golesLocal"
+                placeholder="Goles equipo local"
+                value={resultadoData.golesLocal}
+                onChange={handleResultadoInputChange}
+              />
+              <input
+                type="number"
+                name="golesVisita"
+                placeholder="Goles equipo visitante"
+                value={resultadoData.golesVisita}
+                onChange={handleResultadoInputChange}
+              />
+            </div>
+          )}
+          <button className="text-white" onClick={handleSubmitResultado}>
+            Registrar Resultado
           </button>
         </div>
       )}
