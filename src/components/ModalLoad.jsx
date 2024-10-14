@@ -8,6 +8,7 @@ import {
   relacionarJugadorEquipo,
   registrarPartido,
   registrarResultado,
+  registrarGoleoIndividual,
 } from "../redux/actions/adminSlice"; // Acciones de redux para realizar los POST
 
 const ModalLoad = ({ selectedOption }) => {
@@ -203,7 +204,8 @@ const ModalLoad = ({ selectedOption }) => {
   useEffect(() => {
     if (
       selectedOption === "Ingresar Partido" ||
-      selectedOption === "Registrar Resultado"
+      selectedOption === "Registrar Resultado" ||
+      selectedOption === "Registrar Goleo Individual"
     ) {
       fetch(
         "https://www.dcoapi.somee.com/api/ObtenerDatos/MostrarCategorias?idLiga=4"
@@ -287,7 +289,7 @@ const ModalLoad = ({ selectedOption }) => {
   const handlePartidoChange = (e) => {
     const idTorneo = e.target.value;
     setResultadoData({ ...resultadoData, idTorneo });
-
+    setGoleoData({ ...goleoData, idTorneo });
     // Obtener jugadores según el partido
     fetch(
       `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendario?idTorneo=${idTorneo}`
@@ -303,26 +305,123 @@ const ModalLoad = ({ selectedOption }) => {
   };
 
   // Manejar el envío del formulario para registrar el resultado
-const handleSubmitResultado = () => {
-  const { idPartido, golesLocal, golesVisita, idEquipoLocal, idEquipoVisita, idTorneo } = resultadoData;
+  const handleSubmitResultado = () => {
+    const {
+      idPartido,
+      golesLocal,
+      golesVisita,
+      idEquipoLocal,
+      idEquipoVisita,
+      idTorneo,
+    } = resultadoData;
 
-  if (idPartido !== "" && golesLocal !== "" && golesVisita !== "" && idEquipoLocal !== "" && 
-  idEquipoVisita !== "" && idTorneo !== "") {
-    dispatch(registrarResultado(resultadoData)).then((response) => {
-      // if (response.payload.success) {
-      //   alert("Resultado registrado con éxito");
-      //   // Limpiar formulario o cerrar modal
-      // } else {
-      //   alert("Hubo un error al registrar el resultado");
-      // }
-      console.log("se enviaron")
-    });
-  } else {
-    alert("Todos los campos son requeridos.");
-  }
-};
+    if (
+      idPartido !== "" &&
+      golesLocal !== "" &&
+      golesVisita !== "" &&
+      idEquipoLocal !== "" &&
+      idEquipoVisita !== "" &&
+      idTorneo !== ""
+    ) {
+      dispatch(registrarResultado(resultadoData)).then((response) => {
+        // if (response.payload.success) {
+        //   alert("Resultado registrado con éxito");
+        // Limpiar formulario o cerrar modal
+        // } else {
+        //   alert("Hubo un error al registrar el resultado");
+        // }
+        console.log("se enviaron");
+      });
+    } else {
+      alert("Todos los campos son requeridos.");
+    }
+  };
 
-  console.log(resultadoData);
+  //Registrar goleo INDIVIDUAL
+  const [goleoData, setGoleoData] = useState({
+    idTorneo: "",
+    idPartido: "",
+    idEquipo: "",
+    idJugador: "",
+    numeroJugador: "",
+    goles: "",
+
+    equipoSeleccionado: "",
+    idEquipoLocal: "",
+    idEquipoVisita: "",
+    nombreEquipoLocal: "",
+    nombreEquipoVisita: "",
+  });
+
+  const [jugadoresGoleo, setJugadoresGoleo] = useState([]);
+
+  const handleGoleoInputChange = (e) => {
+    const { name, value } = e.target;
+    setGoleoData({ ...goleoData, [name]: value });
+  };
+
+  const handleSubmitGoleo = () => {
+    console.log(goleoData)
+    const {
+      idPartido,
+      idTorneo,
+      idEquipo,
+      idJugador,
+      numeroJugador,
+      goles,
+    } = goleoData;
+
+    if (
+      idPartido !== "" &&
+      idEquipo !== "" &&
+      idJugador !== "" &&
+      numeroJugador !== "" &&
+      goles !== "" &&
+      idTorneo !== ""
+    ) {
+      dispatch(registrarGoleoIndividual(goleoData)).then((response) => {
+        // if (response.payload.success) {
+        //   alert("Resultado registrado con éxito");
+        // Limpiar formulario o cerrar modal
+        // } else {
+        //   alert("Hubo un error al registrar el resultado");
+        // }
+        console.log("se enviaron");
+      });
+    } else {
+      alert("Todos los campos son requeridos.");
+    }
+  };
+
+  useEffect(() => {
+    // Obtener jugadores según el partido
+    if (goleoData.equipoSeleccionado !== ""){
+      fetch(
+        `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+
+          const result = data.filter((name) => name.nombre === goleoData.equipoSeleccionado);
+          
+          if (result.length > 0){
+
+            let idEquipo = result[0].idEquipo
+
+            setGoleoData({
+              ...goleoData,
+              idEquipo,
+            })
+
+            fetch(
+              `https://www.dcoapi.somee.com/api/ObtenerDatos/MuestraJugadores?idEquipo=${idEquipo}`
+            )
+              .then((res) => res.json())
+              .then((data) => setJugadoresGoleo(data));
+          }
+        });
+    }
+  }, [goleoData.equipoSeleccionado]);
 
   return (
     <div>
@@ -651,7 +750,6 @@ const handleSubmitResultado = () => {
           {resultadoData.idTorneo !== "" && (
             <div>
               <select
-                value={resultadoData.idPartido}
                 onChange={(e) =>
                   setResultadoData({
                     ...resultadoData,
@@ -695,6 +793,138 @@ const handleSubmitResultado = () => {
           )}
           <button className="text-white" onClick={handleSubmitResultado}>
             Registrar Resultado
+          </button>
+        </div>
+      )}
+
+      {selectedOption === "Registrar Goleo Individual" && (
+        <div>
+          <h2 className="text-white">Registrar Resultado</h2>
+
+          <select onChange={handleCategoriaChangePartido}>
+            <option value="" disabled>
+              Selecciona categoría
+            </option>
+            {categorias.map((categoria, index) => (
+              <option key={index} value={categoria.idCategoria}>
+                {categoria.categoria}
+              </option>
+            ))}
+          </select>
+
+          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
+            <option value="" disabled>
+              Selecciona Torneo
+            </option>
+            {torneos.map((torneo, index) => (
+              <option key={index} value={torneo.idTorneo}>
+                {torneo.nombre}
+              </option>
+            ))}
+          </select>
+
+          {goleoData.idTorneo !== "" && (
+            <div>
+              <select
+                onChange={(e) =>
+                  setGoleoData({
+                    ...goleoData,
+                    idPartido: e.target.value.split("-")[0],
+                    idEquipoLocal: e.target.value.split("-")[1],
+                    idEquipoVisita: e.target.value.split("-")[2],
+                    nombreEquipoLocal: e.target.value.split("-")[3],
+                    nombreEquipoVisita: e.target.value.split("-")[4],
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Torneo
+                </option>
+                {partidos.map((partido) => (
+                  <option
+                    key={partido.idPartido}
+                    value={`${partido.idPartido}-${partido.idEquipoLocal}-${partido.idEquipoVisita}-${partido.nombreEquipoLocal}-${partido.nombreEquipoVisita}`}
+                  >
+                    {partido.nombreEquipoLocal} vs {partido.nombreEquipoVisita}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {goleoData.idPartido !== "" && (
+            <div>
+              <select
+                onChange={(e) =>
+                  setGoleoData({
+                    ...goleoData,
+                    equipoSeleccionado: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Equipo
+                </option>
+                <option value={goleoData.nombreEquipoLocal}>
+                  {goleoData.nombreEquipoLocal}
+                </option>
+                <option value={goleoData.nombreEquipoVisita}>
+                  {goleoData.nombreEquipoVisita}
+                </option>
+              </select>
+
+              {/* <input
+                type="number"
+                name="golesLocal"
+                placeholder="Goles equipo local"
+                value={resultadoData.golesLocal}
+                onChange={handleResultadoInputChange}
+              />
+              <input
+                type="number"
+                name="golesVisita"
+                placeholder="Goles equipo visitante"
+                value={resultadoData.golesVisita}
+                onChange={handleResultadoInputChange}
+              /> */}
+            </div>
+          )}
+          {jugadoresGoleo.length > 0 && (
+            <div>
+              <select
+                onChange={(e) =>
+                  setGoleoData({
+                    ...goleoData,
+                    idJugador: e.target.value.split("-")[0],
+                    numeroJugador: e.target.value.split("-")[1],
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Jugador
+                </option>
+                {jugadoresGoleo.map((jugador, index) => (
+                  <option
+                    key={index}
+                    value={`${jugador.identificador}-${jugador.playera}`}
+                  >
+                    {jugador.nombreJugador}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {goleoData.idJugador !== "" && (
+            <div>
+              <input
+                type="number"
+                name="goles"
+                placeholder="Goles del jugador"
+                onChange={handleGoleoInputChange}
+              />
+            </div>
+          )}
+          <button className="text-white" onClick={handleSubmitGoleo}>
+            Registrar Goleo
           </button>
         </div>
       )}

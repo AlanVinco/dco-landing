@@ -168,6 +168,28 @@ export const registrarResultado = createAsyncThunk(
   }
 );
 
+// Thunk para registrar el Goleo
+
+export const registrarGoleoIndividual = createAsyncThunk(
+  "admin/registrarGoleoIndividual",
+  async (formData) => {
+    const body = {
+      idPartido: parseInt(formData.idPartido),
+      idTorneo: parseInt(formData.idTorneo),
+      idEquipo: parseInt(formData.idEquipo),
+      idJugador: parseInt(formData.idJugador),
+      numeroJugador: parseInt(formData.numeroJugador),
+      goles: parseInt(formData.goles),
+    };
+
+    const response = await axios.post(
+      "https://www.dcoapi.somee.com/api/EnviarDatos/insertarGoleoIndividual_4_0",
+      body
+    );
+    return response.data;
+  }
+);
+
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -219,6 +241,9 @@ const adminSlice = createSlice({
       // Para manejar el registro del resultado del partido
       .addCase(registrarResultado.fulfilled, (state, action) => {
         console.log("Resultado registrado con éxito", action.payload);
+      })
+      .addCase(registrarGoleoIndividual.fulfilled, (state, action) => {
+        console.log("Goleo Individual registrado con éxito", action.payload);
       });
   },
 });
