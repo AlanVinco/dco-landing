@@ -4,10 +4,11 @@ import { fetchVideos, insertVideo } from "../redux/actions/videosSlice";
 import Modal from "../components/Modal";
 
 const Videos = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const { data: videos, status, error } = useSelector((state) => state.videos);
   const [isModalOpen, setModalOpen] = useState(false);
-  
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchVideos());
@@ -25,7 +26,7 @@ const Videos = () => {
   const handleAddVideo = (nombre, videoUrl) => {
     const newVideo = {
       nombre: nombre,
-      video: videoUrl
+      video: videoUrl,
     };
     dispatch(insertVideo(newVideo)); // Despacha la acción para agregar un nuevo video
     setModalOpen(false); // Cierra el modal después de insertar
@@ -35,22 +36,34 @@ const Videos = () => {
     <div>
       <div className="hero-content flex-col lg:flex-row card glass">
         <div className="carousel carousel-vertical rounded-box h-96">
-          {videos.filter(video => video.video.startsWith("https://www.youtube.com")).map((video, index) => (
-            <LazyLoadIframe key={index} src={video.video} />
-          ))}
+          {videos
+            .filter((video) =>
+              video.video.startsWith("https://www.youtube.com")
+            )
+            .map((video, index) => (
+              <LazyLoadIframe key={index} src={video.video} />
+            ))}
         </div>
       </div>
 
-      <div className="mt-4">
-        <button
-          className="btn btn-primary"
-          onClick={() => setModalOpen(true)}
-        >
-          Agregar Nuevo Video
-        </button>
-      </div>
+      {isAuthenticated && (
+        <div className="mt-4">
+          <button
+            className="btn btn-primary"
+            onClick={() => setModalOpen(true)}
+          >
+            Agregar Nuevo Video
+          </button>
+        </div>
+      )}
 
-      {isModalOpen && <Modal onClose={() => setModalOpen(false)} onSubmit={handleAddVideo} fetchTable={fetchVideos()} />}
+      {isModalOpen && (
+        <Modal
+          onClose={() => setModalOpen(false)}
+          onSubmit={handleAddVideo}
+          fetchTable={fetchVideos()}
+        />
+      )}
     </div>
   );
 };

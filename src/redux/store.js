@@ -9,6 +9,7 @@ import adminReducer  from './actions/adminSlice';
 import modalReducer from "./actions/modalSlice";
 import correcionesReducer from "./actions/correcionesSlice";
 import noticiasReducer from "./actions/noticiasSlice";
+import visitasReducer  from './actions/visitasSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,5 +22,6 @@ export const store = configureStore({
     modal: modalReducer,
     correcciones:correcionesReducer,
     noticias: noticiasReducer,
+    visitas: visitasReducer,
   },
 });

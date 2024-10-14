@@ -18,7 +18,7 @@ export const insertVideo = createAsyncThunk(
   'videos/insertVideo',
   async (newVideo, { rejectWithValue }) => {
     try {
-      const response = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/InsertaVideo_5_', {
+      const response = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/InsertaVideo_5_0', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

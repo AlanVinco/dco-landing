@@ -2,14 +2,18 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
+import { fetchVisitas } from "../redux/actions/visitasSlice";
+import VisitCount from "./VisitCount";
 
 import logo from "../assets/dco-hd-sinfondo.png";
 
 const DashboardLayout = () => {
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const visitas = useSelector((state) =>
+    state.visitas.visitas.length > 0 ? state.visitas.visitas[0].idConexion : 0
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("user");
@@ -20,6 +24,7 @@ const DashboardLayout = () => {
       dispatch(logout());
       navigate("/login");
     }
+    dispatch(fetchVisitas());
   }, [dispatch, navigate]);
 
   const handleLogout = () => {
@@ -28,7 +33,7 @@ const DashboardLayout = () => {
     navigate("/");
   };
 
-    return (
+  return (
     <div className="bg-[#06938D]">
       <div className="">
         <div className="flex justify-center">
@@ -39,7 +44,11 @@ const DashboardLayout = () => {
       <div className="navbar bg-[#06938D]">
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden text-white text-xl">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost lg:hidden text-white text-xl"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -60,49 +69,49 @@ const DashboardLayout = () => {
               className="menu menu-sm dropdown-content bg-[#06938D] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-              <a>Inicio</a>
-            </li>
-            <li>
-              <details>
-                <summary>Torneos</summary>
-                <ul className="p-2 bg-[#06938D]">
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <details>
-                <summary>Equipos</summary>
-                <ul className="p-2 bg-[#06938D]">
-                  <li>
-                    <a>Equipo</a>
-                  </li>
-                  <li>
-                    <a>Equipo</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Administración</a>
-            </li>
-            <li>
-              <a>Correciónes</a>
-            </li>
-            <li>
-              <a>Patrocinadores</a>
-            </li>
-            <li>
-              <a>Servicios</a>
-            </li>
-            <li>
-              <a>Videos</a>
-            </li>
+                <a>Inicio</a>
+              </li>
+              <li>
+                <details>
+                  <summary>Torneos</summary>
+                  <ul className="p-2 bg-[#06938D]">
+                    <li>
+                      <a>Torneo</a>
+                    </li>
+                    <li>
+                      <a>Torneo</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary>Equipos</summary>
+                  <ul className="p-2 bg-[#06938D]">
+                    <li>
+                      <a>Equipo</a>
+                    </li>
+                    <li>
+                      <a>Equipo</a>
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <a>Administración</a>
+              </li>
+              <li>
+                <a>Correciónes</a>
+              </li>
+              <li>
+                <a>Patrocinadores</a>
+              </li>
+              <li>
+                <a>Servicios</a>
+              </li>
+              <li>
+                <a>Videos</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -147,25 +156,34 @@ const DashboardLayout = () => {
         </div>
         <div className="navbar-end">
           {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                className="btn btn-outline btn-accent bg-[#F3F4F6]"
-              >
-                Cerrar Sesión
-              </button>
-            ) : (
-              <Link to="/login" className="btn btn-outline btn-accent bg-[#F3F4F6]">
-                Iniciar Sesión
-              </Link>
-            )}        
+            <button
+              onClick={handleLogout}
+              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+            >
+              Cerrar Sesión
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+            >
+              Iniciar Sesión
+            </Link>
+          )}
         </div>
       </div>
 
       <div className="hero bg-[url(https://wallpaperaccess.com/full/7488635.jpg)] bg-cover bg-center min-h-screen">
-        <Outlet/>
+        <Outlet />
       </div>
+      {/* Footer*/}
+      <footer className=" text-black py-4 flex justify-center items-center ">
+        <div>
+          <VisitCount num={visitas}/>
+        </div>
+      </footer>
     </div>
-    );
+  );
 };
 
 export default DashboardLayout;

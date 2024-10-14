@@ -2,6 +2,8 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
+import { fetchVisitas } from "../redux/actions/visitasSlice";
+import VisitCount from "./VisitCount";
 
 import logo from "../assets/dco-hd-sinfondo.png";
 
@@ -9,6 +11,9 @@ const Home = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const visitas = useSelector((state) =>
+    state.visitas.visitas.length > 0 ? state.visitas.visitas[0].idConexion : 0
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("user");
@@ -19,6 +24,7 @@ const Home = () => {
       dispatch(logout());
       // navigate("/login");
     }
+    dispatch(fetchVisitas());
   }, [dispatch, navigate]);
 
   const handleLogout = () => {
@@ -163,8 +169,14 @@ const Home = () => {
             <button className="btn btn-accent">Equipo</button>
           </div>
         </div> */}
-        <Outlet/>
+        <Outlet />
       </div>
+      {/* Footer*/}
+      <footer className=" text-black py-4 flex justify-center items-center ">
+        <div>
+          <VisitCount num={visitas} />
+        </div>
+      </footer>
     </div>
   );
 };
