@@ -9,6 +9,7 @@ import {
   registrarPartido,
   registrarResultado,
   registrarGoleoIndividual,
+  registrarGoleoTotal,
 } from "../redux/actions/adminSlice"; // Acciones de redux para realizar los POST
 
 const ModalLoad = ({ selectedOption }) => {
@@ -205,7 +206,8 @@ const ModalLoad = ({ selectedOption }) => {
     if (
       selectedOption === "Ingresar Partido" ||
       selectedOption === "Registrar Resultado" ||
-      selectedOption === "Registrar Goleo Individual"
+      selectedOption === "Registrar Goleo Individual" ||
+      selectedOption === "Registrar Goleo Total"
     ) {
       fetch(
         "https://www.dcoapi.somee.com/api/ObtenerDatos/MostrarCategorias?idLiga=4"
@@ -290,6 +292,7 @@ const ModalLoad = ({ selectedOption }) => {
     const idTorneo = e.target.value;
     setResultadoData({ ...resultadoData, idTorneo });
     setGoleoData({ ...goleoData, idTorneo });
+    setGoleoTotal({ ...goleoData, idTorneo });
     // Obtener jugadores según el partido
     fetch(
       `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendario?idTorneo=${idTorneo}`
@@ -361,15 +364,9 @@ const ModalLoad = ({ selectedOption }) => {
   };
 
   const handleSubmitGoleo = () => {
-    console.log(goleoData)
-    const {
-      idPartido,
-      idTorneo,
-      idEquipo,
-      idJugador,
-      numeroJugador,
-      goles,
-    } = goleoData;
+    console.log(goleoData);
+    const { idPartido, idTorneo, idEquipo, idJugador, numeroJugador, goles } =
+      goleoData;
 
     if (
       idPartido !== "" &&
@@ -395,23 +392,21 @@ const ModalLoad = ({ selectedOption }) => {
 
   useEffect(() => {
     // Obtener jugadores según el partido
-    if (goleoData.equipoSeleccionado !== ""){
-      fetch(
-        `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos`
-      )
+    if (goleoData.equipoSeleccionado !== "") {
+      fetch(`https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos`)
         .then((res) => res.json())
         .then((data) => {
+          const result = data.filter(
+            (name) => name.nombre === goleoData.equipoSeleccionado
+          );
 
-          const result = data.filter((name) => name.nombre === goleoData.equipoSeleccionado);
-          
-          if (result.length > 0){
-
-            let idEquipo = result[0].idEquipo
+          if (result.length > 0) {
+            let idEquipo = result[0].idEquipo;
 
             setGoleoData({
               ...goleoData,
               idEquipo,
-            })
+            });
 
             fetch(
               `https://www.dcoapi.somee.com/api/ObtenerDatos/MuestraJugadores?idEquipo=${idEquipo}`
@@ -422,6 +417,76 @@ const ModalLoad = ({ selectedOption }) => {
         });
     }
   }, [goleoData.equipoSeleccionado]);
+
+  //Registrar GOLEO TOTAL
+
+  const [goleoTotal, setGoleoTotal] = useState({
+    idTorneo: "",
+    idPartido: "",
+    idEquipo: "",
+    golesAnotados: "",
+    golesRecibidos: "",
+    resultado: "",
+
+    equipoSeleccionado: "",
+    idEquipoLocal: "",
+    idEquipoVisita: "",
+    nombreEquipoLocal: "",
+    nombreEquipoVisita: "",
+  });
+
+  useEffect(() => {
+    // Obtener jugadores según el partido
+    if (goleoTotal.equipoSeleccionado !== "") {
+      fetch(`https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos`)
+        .then((res) => res.json())
+        .then((data) => {
+          const result = data.filter(
+            (name) => name.nombre === goleoTotal.equipoSeleccionado
+          );
+
+          if (result.length > 0) {
+            let idEquipo = result[0].idEquipo;
+
+            setGoleoTotal({
+              ...goleoTotal,
+              idEquipo,
+            });
+          }
+        });
+    }
+  }, [goleoTotal.equipoSeleccionado]);
+
+  const handleGoleoTotalInputChange = (e) => {
+    const { name, value } = e.target;
+    setGoleoTotal({ ...goleoTotal, [name]: value });
+  };
+
+  const handleSubmitGoleoTotal = () => {
+    const { idPartido, idTorneo, idEquipo, golesAnotados, golesRecibidos, resultado } =
+    goleoTotal;
+
+    if (
+      idPartido !== "" &&
+      idEquipo !== "" &&
+      golesAnotados !== "" &&
+      golesRecibidos !== "" &&
+      resultado !== "" &&
+      idTorneo !== ""
+    ) {
+      dispatch(registrarGoleoTotal(goleoTotal)).then((response) => {
+        // if (response.payload.success) {
+        //   alert("Resultado registrado con éxito");
+        // Limpiar formulario o cerrar modal
+        // } else {
+        //   alert("Hubo un error al registrar el resultado");
+        // }
+        console.log("se enviaron");
+      });
+    } else {
+      alert("Todos los campos son requeridos.");
+    }
+  };
 
   return (
     <div>
@@ -799,7 +864,7 @@ const ModalLoad = ({ selectedOption }) => {
 
       {selectedOption === "Registrar Goleo Individual" && (
         <div>
-          <h2 className="text-white">Registrar Resultado</h2>
+          <h2 className="text-white">Registrar Goleo Individual</h2>
 
           <select onChange={handleCategoriaChangePartido}>
             <option value="" disabled>
@@ -871,21 +936,6 @@ const ModalLoad = ({ selectedOption }) => {
                   {goleoData.nombreEquipoVisita}
                 </option>
               </select>
-
-              {/* <input
-                type="number"
-                name="golesLocal"
-                placeholder="Goles equipo local"
-                value={resultadoData.golesLocal}
-                onChange={handleResultadoInputChange}
-              />
-              <input
-                type="number"
-                name="golesVisita"
-                placeholder="Goles equipo visitante"
-                value={resultadoData.golesVisita}
-                onChange={handleResultadoInputChange}
-              /> */}
             </div>
           )}
           {jugadoresGoleo.length > 0 && (
@@ -925,6 +975,110 @@ const ModalLoad = ({ selectedOption }) => {
           )}
           <button className="text-white" onClick={handleSubmitGoleo}>
             Registrar Goleo
+          </button>
+        </div>
+      )}
+
+      {selectedOption === "Registrar Goleo Total" && (
+        <div>
+          <h2 className="text-white">Registrar Goleo Total</h2>
+
+          <select onChange={handleCategoriaChangePartido}>
+            <option value="" disabled>
+              Selecciona categoría
+            </option>
+            {categorias.map((categoria, index) => (
+              <option key={index} value={categoria.idCategoria}>
+                {categoria.categoria}
+              </option>
+            ))}
+          </select>
+
+          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
+            <option value="" disabled>
+              Selecciona Torneo
+            </option>
+            {torneos.map((torneo, index) => (
+              <option key={index} value={torneo.idTorneo}>
+                {torneo.nombre}
+              </option>
+            ))}
+          </select>
+
+          {goleoTotal.idTorneo !== "" && (
+            <div>
+              <select
+                onChange={(e) =>
+                  setGoleoTotal({
+                    ...goleoTotal,
+                    idPartido: e.target.value.split("-")[0],
+                    idEquipoLocal: e.target.value.split("-")[1],
+                    idEquipoVisita: e.target.value.split("-")[2],
+                    nombreEquipoLocal: e.target.value.split("-")[3],
+                    nombreEquipoVisita: e.target.value.split("-")[4],
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Torneo
+                </option>
+                {partidos.map((partido) => (
+                  <option
+                    key={partido.idPartido}
+                    value={`${partido.idPartido}-${partido.idEquipoLocal}-${partido.idEquipoVisita}-${partido.nombreEquipoLocal}-${partido.nombreEquipoVisita}`}
+                  >
+                    {partido.nombreEquipoLocal} vs {partido.nombreEquipoVisita}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          {goleoTotal.idPartido !== "" && (
+            <div>
+              <select
+                onChange={(e) =>
+                  setGoleoTotal({
+                    ...goleoTotal,
+                    equipoSeleccionado: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  Selecciona Equipo
+                </option>
+                <option value={goleoTotal.nombreEquipoLocal}>
+                  {goleoTotal.nombreEquipoLocal}
+                </option>
+                <option value={goleoTotal.nombreEquipoVisita}>
+                  {goleoTotal.nombreEquipoVisita}
+                </option>
+              </select>
+            </div>
+          )}
+          {goleoTotal.idEquipo !== "" && (
+            <div>
+              <input
+                type="number"
+                name="golesAnotados"
+                placeholder="Goles Anotados"
+                onChange={handleGoleoTotalInputChange}
+              />
+              <input
+                type="number"
+                name="golesRecibidos"
+                placeholder="Goles Recibidos"
+                onChange={handleGoleoTotalInputChange}
+              />
+              <input
+                type="number"
+                name="resultado"
+                placeholder="Resultado"
+                onChange={handleGoleoTotalInputChange}
+              />
+            </div>
+          )}
+          <button className="text-white" onClick={handleSubmitGoleoTotal}>
+            Registrar Goleo Total
           </button>
         </div>
       )}

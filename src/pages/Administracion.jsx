@@ -11,6 +11,7 @@ const options = [
   "Ingresar Partido",
   "Registrar Resultado",
   "Registrar Goleo Individual",
+  "Registrar Goleo Total"
 ];
 
 const AdminSelector = () => {
