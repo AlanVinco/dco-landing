@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
 import VisitCount from "./VisitCount";
+import { registerGuestConnection } from '../redux/actions/loginSlice';
 
 import logo from "../assets/dco-hd-sinfondo.png";
 
@@ -32,6 +33,11 @@ const Home = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  useEffect(() => {
+    registerGuestConnection()
+  }, [])
+  
 
   return (
     <div className="bg-[#06938D]">
@@ -118,7 +124,7 @@ const Home = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-white">
             <li>
-              <Link to="/home">Inicio</Link>
+              <Link to="/">Inicio</Link>
             </li>
             <li>
               <Link to="/torneos">Torneos</Link>

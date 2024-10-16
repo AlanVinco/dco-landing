@@ -1,11 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Función para obtener la IP del usuario
+const fetchUserIP = async () => {
+  try {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
+  } catch (error) {
+    console.error('Error fetching IP:', error);
+    return null;
+  }
+};
+
 // Acción asíncrona para realizar el login
 export const loginUser = createAsyncThunk(
   'login/loginUser',
   async (credentials, { rejectWithValue }) => {
     try {
-      // Aquí usa el proxy /api para evitar problemas de CORS
+      // Realiza el POST para el login
       const response = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/ValidaUsuario_1_1', {
         method: 'POST',
         headers: {
@@ -24,12 +36,69 @@ export const loginUser = createAsyncThunk(
         throw new Error('Credenciales incorrectas');
       }
 
-      return data[0]; // Retorna el primer objeto de la respuesta
+      // Obtener la IP del usuario
+      const userIP = await fetchUserIP();
+
+      // Realizar el segundo POST para registrar la conexión
+      const registerResponse = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/RegistraConexion_1_2', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idTipoUsuario: data[0].idTipoUsuario,
+          idUsuario: 17,
+          alias: "Invitado",
+          ip: userIP || '38.49.137.173',
+          nombreDispositivo: 'pruebaAPI', // Puedes ajustar esto según sea necesario
+        }),
+      });
+
+      if (!registerResponse.ok) {
+        throw new Error('Error registrando conexión');
+      }
+
+      // Devuelve los datos del login
+      return data[0]; 
     } catch (error) {
       return rejectWithValue(error.message); // Maneja el error
     }
   }
 );
+
+// Función para registrar la conexión de un usuario no logeado (invitado)
+export const registerGuestConnection = async () => {
+  try {
+    // Obtener la IP del usuario
+    const userIP = await fetchUserIP();
+
+    // Realizar el POST para registrar la conexión como invitado
+    const registerResponse = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/RegistraConexion_1_2', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        idTipoUsuario: 1001,
+        idUsuario: 17,
+        alias: "Invitado",
+        ip: userIP || '38.49.137.173', // Usa la IP obtenida o un mensaje por defecto si falla
+        nombreDispositivo: "pruebaAPI",
+      }),
+    });
+
+    if (!registerResponse.ok) {
+      throw new Error('Error registrando conexión para invitado');
+    }
+
+    const data = await registerResponse.json();
+    console.log('Conexión registrada para invitado:', data);
+    return data; // Retorna la respuesta si es necesario
+  } catch (error) {
+    console.error('Error en registerGuestConnection:', error);
+    return null;
+  }
+};
 
 const loginSlice = createSlice({
   name: 'login',
