@@ -41,7 +41,7 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className="navbar bg-[#06938D]">
+      <div className="navbar bg-[#06938D] shadow-xl rounded-box">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -178,8 +178,26 @@ const DashboardLayout = () => {
       </div>
       {/* Footer*/}
       <footer className=" text-black py-4 flex justify-center items-center ">
-        <div>
-          <VisitCount num={visitas}/>
+        <div className="stats shadow-xl rounded-box card glass ">
+          <div className="stat">
+            <div className="stat-figure text-black">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title text-black">Número de visitas:</div>
+            <div className="stat-value text-black">{visitas}</div>
+          </div>
         </div>
       </footer>
     </div>
