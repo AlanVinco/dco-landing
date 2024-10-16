@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
-import VisitCount from "./VisitCount";
 
-import logo from "../assets/dco-hd-sinfondo.png";
+import logo from "../assets/dco-logo-final-no-bg.png";
 
 const DashboardLayout = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -34,14 +33,14 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="bg-[#06938D]">
+    <div className="bg-[#1A1A2E]">
       <div className="">
         <div className="flex justify-center">
           <img src={logo} alt="logo" className="w-64" />
         </div>
       </div>
 
-      <div className="navbar bg-[#06938D] shadow-xl rounded-box">
+      <div className="navbar bg-[#8B0000] shadow-xl rounded-box">
         <div className="navbar-start">
           <div className="dropdown">
             <div
@@ -158,14 +157,14 @@ const DashboardLayout = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
             >
               Cerrar Sesión
             </button>
           ) : (
             <Link
               to="/login"
-              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
             >
               Iniciar Sesión
             </Link>
@@ -173,11 +172,11 @@ const DashboardLayout = () => {
         </div>
       </div>
 
-      <div className="hero bg-[url(https://wallpaperaccess.com/full/7488635.jpg)] bg-cover bg-center min-h-screen">
+      <div className="hex-main-background hero bg-gradient-to-t from-[#1A1A2E] from-10% via-[#003366] via-30% to-[#1A1A2E] to-90% bg-cover bg-center min-h-screen">
         <Outlet />
       </div>
       {/* Footer*/}
-      <footer className=" text-black py-4 flex justify-center items-center ">
+      <footer className=" text-black py-4 flex justify-center items-center bg-[#8B0000] rounded-t-box shadow-xl">
         <div className="stats shadow-xl rounded-box card glass ">
           <div className="stat">
             <div className="stat-figure text-black">

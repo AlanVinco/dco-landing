@@ -28,3 +28,14 @@
     background-color: #F3F4F6;
     background-position: bottom, 50%;
 }
+.hex-main-background {
+    background: 
+        url('/src/assets/react.svg') no-repeat center center,
+        linear-gradient(
+            to top, 
+            #1A1A2E 10%, 
+            #003366 30%, 
+            #1A1A2E 90%
+        );
+    background-size: 101%, cover;
+}

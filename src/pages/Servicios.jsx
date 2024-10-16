@@ -1,4 +1,4 @@
-import React from "react";
+import logo from "../assets/seguro-medico.jpg";
 
 const Servicios = () => {
   return (
@@ -12,7 +12,7 @@ const Servicios = () => {
           allowFullScreen
         ></iframe>
         <div className="card-body">
-          <img className="object-cover w-[500px]" src="https://www.loginliga.somee.com/img/seguro%20medico.jpg" alt="Album" />
+          <img className="object-cover w-[500px]" src={logo} alt="Album" />
         </div>
       </div>
     </div>

@@ -78,7 +78,7 @@ const Torneos = () => {
         </select>
       </div>
 
-      {equipos.length > 0 && (
+      {/* {equipos.length > 0 && (
         <div className="mb-4 text-white">
           <h2 className="text-lg font-bold mb-2">Equipos</h2>
           <table className="min-w-full border">
@@ -96,7 +96,7 @@ const Torneos = () => {
             </tbody>
           </table>
         </div>
-      )}
+      )} */}
 
       {torneos.length > 0 && (
         <div className="mb-4 ">
@@ -116,7 +116,7 @@ const Torneos = () => {
         </div>
       )}
 
-      {calendario.length > 0 && (
+      {/* {calendario.length > 0 && (
         <div className="mb-4 text-white">
           <h2 className="text-lg font-bold mb-2">Calendario</h2>
           <table className="min-w-full border">
@@ -138,7 +138,7 @@ const Torneos = () => {
             </tbody>
           </table>
         </div>
-      )}
+      )} */}
 
       {/* selector */}
     <div className="container mx-auto p-4 text-white">
@@ -146,7 +146,6 @@ const Torneos = () => {
         <label className="block text-gray-700 text-white">Selecciona una opción:</label>
         <select className="mt-1 block w-full p-2 border text-black" onChange={handleOptionChange} value={option}>
           <option value="">Seleccionar</option>
-          <option value="Tabla General Vacía">Tabla General Vacía</option>
           <option value="Tabla General">Tabla General</option>
           <option value="Tabla de Goleo Individual">Tabla de Goleo Individual</option>
           <option value="Calendario de Goleos">Calendario de Goleos</option>
@@ -155,29 +154,6 @@ const Torneos = () => {
       </div>
 
       {/* Conditionally render tables based on selected option */}
-      {option === 'Tabla General Vacía' && tablaGeneralVacia.length > 0 && (
-        <table className="min-w-full table-auto">
-          <thead>
-            <tr>
-              <th>Equipo</th>
-              <th>Puntos</th>
-              <th>JJ</th>
-              {/* Other table headers */}
-            </tr>
-          </thead>
-          <tbody>
-            {tablaGeneralVacia.map((row, index) => (
-              <tr key={index}>
-                <td>{row.equipo}</td>
-                <td>{row.puntos}</td>
-                <td>{row.jj}</td>
-                {/* Other table data */}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-
       {option === 'Tabla General' && tablaGeneral.length > 0 && (
         <table className="min-w-full table-auto">
           <thead>

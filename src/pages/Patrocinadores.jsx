@@ -1,4 +1,6 @@
 import 'animate.css';
+import logo from "../assets/cafe.jpg";
+
 
 const Patrocinadores = () => {
   return (
@@ -12,7 +14,7 @@ const Patrocinadores = () => {
           allowFullScreen
         ></iframe>
         <div className="card-body">
-          <img className="object-cover w-[500px]" src="https://www.loginliga.somee.com/img/cafe.jpg" alt="Album" />
+          <img className="object-cover w-[500px]" src={logo} alt="cafe" />
         </div>
       </div>
     </div>
