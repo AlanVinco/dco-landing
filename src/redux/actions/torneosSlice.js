@@ -50,7 +50,7 @@ export const fetchTablaGoleoIndividual = createAsyncThunk(
 export const fetchCalendarioGoleo = createAsyncThunk(
   'torneos/fetchCalendarioGoleo',
   async (selectedTorneo) => {
-    const response = await axios.get(`https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendarioGoleo?idTorneo=${selectedTorneo}`);
+    const response = await axios.get(`https://www.dcoapi.somee.com/api/ObtenerDatos/MuestResultadosTorneo?idTorneo=${selectedTorneo}`);
     return response.data;
   }
 );

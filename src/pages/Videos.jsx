@@ -2,12 +2,33 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideos, insertVideo } from "../redux/actions/videosSlice";
 import Modal from "../components/Modal";
+import Alert from "../components/Alert";
 
 const Videos = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const { data: videos, status, error } = useSelector((state) => state.videos);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+
+  const showSuccessAlert = () => {
+    setAlertMessage("El video se agregó correctamente.");
+    setAlertType("success");
+  };
+
+  const showErrorAlert = () => {
+    setAlertMessage("A ocurrido un error.");
+    setAlertType("error");
+  };
+
+  const handleCloseAlert = () => {
+    setAlertMessage(""); // Esto hará que la alerta se cierre
+  };
+
+  const handleRefresh = () => {
+    dispatch(fetchVideos());
+  };
 
   useEffect(() => {
     if (status === "idle") {
@@ -28,17 +49,31 @@ const Videos = () => {
       nombre: nombre,
       video: videoUrl,
     };
-    dispatch(insertVideo(newVideo)); // Despacha la acción para agregar un nuevo video
-    setModalOpen(false); // Cierra el modal después de insertar
+
+    dispatch(insertVideo(newVideo))
+      .then(() => {
+        showSuccessAlert();
+        handleRefresh(); // Refrescar después de agregar el video
+      })
+      .catch((error) => {
+        showErrorAlert();
+      });
   };
 
   return (
-    <div>
+    <div className="animate__animated animate__jackInTheBox">
+      <Alert
+        message={alertMessage}
+        type={alertType}
+        duration={3000}
+        onClose={handleCloseAlert}
+      />
       <div className="hero-content flex-col lg:flex-row card glass">
         <div className="carousel carousel-vertical rounded-box h-96">
           {videos
-            .filter((video) =>
-              video.video.startsWith("https://www.youtube.com")
+            .filter(
+              (video) =>
+                video.video && video.video.startsWith("https://www.youtube.com")
             )
             .map((video, index) => (
               <LazyLoadIframe key={index} src={video.video} />
@@ -49,7 +84,7 @@ const Videos = () => {
       {isAuthenticated && (
         <div className="mt-4">
           <button
-            className="btn btn-primary"
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
             onClick={() => setModalOpen(true)}
           >
             Agregar Nuevo Video
@@ -58,11 +93,7 @@ const Videos = () => {
       )}
 
       {isModalOpen && (
-        <Modal
-          onClose={() => setModalOpen(false)}
-          onSubmit={handleAddVideo}
-          fetchTable={fetchVideos()}
-        />
+        <Modal onClose={() => setModalOpen(false)} onSubmit={handleAddVideo} />
       )}
     </div>
   );

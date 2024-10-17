@@ -33,7 +33,7 @@ export const insertVideo = createAsyncThunk(
       const data = await response.json();
       return data; // Retorna la respuesta de la API
     } catch (error) {
-      return rejectWithValue(error.message); // Maneja el error
+      console.log("error")
     }
   }
 );
