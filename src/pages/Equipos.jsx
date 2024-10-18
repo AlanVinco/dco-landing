@@ -60,7 +60,7 @@ function Equipos() {
           onChange={handleCategoriaChange}
           className="select select-error w-full text-lg shadow-xl"
         >
-          <option value="" defaultValue disabled>
+          <option value="" selected disabled>
             Selecciona una categoría
           </option>
           {categorias.map((categoria, index) => (
@@ -129,7 +129,7 @@ function Equipos() {
           </table>
         </div>
       )}
-      {jugadores.length === 0 && <div className="text-white">No se encontraron registros.</div>}
+      {selectedCategoria && selectedEquipo && jugadores.length === 0 && <div className="text-white">No se encontraron registros.</div>}
 
       {/* Modal */}
       {showModal && (

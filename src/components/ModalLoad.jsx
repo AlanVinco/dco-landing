@@ -463,8 +463,14 @@ const ModalLoad = ({ selectedOption }) => {
   };
 
   const handleSubmitGoleoTotal = () => {
-    const { idPartido, idTorneo, idEquipo, golesAnotados, golesRecibidos, resultado } =
-    goleoTotal;
+    const {
+      idPartido,
+      idTorneo,
+      idEquipo,
+      golesAnotados,
+      golesRecibidos,
+      resultado,
+    } = goleoTotal;
 
     if (
       idPartido !== "" &&
@@ -491,42 +497,90 @@ const ModalLoad = ({ selectedOption }) => {
   return (
     <div>
       {selectedOption === "Registrar Categoría" && (
-        <div>
-          <h2>Registrar Categoría</h2>
-          <input
-            type="text"
-            placeholder="Nombre de la categoría"
-            value={categoriaData.categoria}
-            onChange={(e) =>
-              setCategoriaData({ ...categoriaData, categoria: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Edad Mínima"
-            value={categoriaData.edadMinima}
-            onChange={(e) =>
-              setCategoriaData({ ...categoriaData, edadMinima: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Edad Máxima"
-            value={categoriaData.edadMaxima}
-            onChange={(e) =>
-              setCategoriaData({ ...categoriaData, edadMaxima: e.target.value })
-            }
-          />
-          <button className="text-white" onClick={handleCategoriaSubmit}>
+        <div className="space-y-4">
+          <h3 className="font-bold text-lg text-white">Registrar Categoría</h3>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+            </svg>
+
+            <input
+              type="text"
+              className="grow"
+              placeholder="Nombre de la categoría"
+              value={categoriaData.categoria}
+              onChange={(e) =>
+                setCategoriaData({
+                  ...categoriaData,
+                  categoria: e.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+            </svg>
+
+            <input
+              type="number"
+              className="grow"
+              placeholder="Edad Mínima"
+              value={categoriaData.edadMinima}
+              onChange={(e) =>
+                setCategoriaData({
+                  ...categoriaData,
+                  edadMinima: e.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+            </svg>
+
+            <input
+              type="number"
+              placeholder="Edad Máxima"
+              value={categoriaData.edadMaxima}
+              onChange={(e) =>
+                setCategoriaData({
+                  ...categoriaData,
+                  edadMaxima: e.target.value,
+                })
+              }
+            />
+          </label>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleCategoriaSubmit}
+          >
             Registrar Categoría
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Torneo" && (
-        <div>
-          <h2>Registrar Torneo</h2>
+        <div className="space-y-4">
+          <h3 className="font-bold text-lg text-white">Registrar Torneo</h3>
           <select
+            className="select select-error w-full text-lg shadow-xl"
             value={torneoData.idCategoria}
             onChange={handleCategoriaChange}
           >
@@ -539,25 +593,42 @@ const ModalLoad = ({ selectedOption }) => {
               </option>
             ))}
           </select>
-          <input
-            type="text"
-            placeholder="Nombre del Torneo"
-            value={torneoData.nombreTorneo}
-            onChange={(e) =>
-              setTorneoData({ ...torneoData, nombreTorneo: e.target.value })
-            }
-          />
-          <button className="text-white" onClick={handleTorneoSubmit}>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+            </svg>
+
+            <input
+              type="text"
+              placeholder="Nombre del Torneo"
+              value={torneoData.nombreTorneo}
+              onChange={(e) =>
+                setTorneoData({ ...torneoData, nombreTorneo: e.target.value })
+              }
+            />
+          </label>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleTorneoSubmit}
+          >
             Registrar Torneo
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Equipo" && (
-        <div>
-          <h2>Registrar Equipo</h2>
-          <select onChange={handleCategoriaChange}>
-            <option value="" disabled>
+        <div className="space-y-4">
+          <h className="font-bold text-lg text-white">Registrar Equipo</h>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            onChange={handleCategoriaChange}
+          >
+            <option value="" selected disabled>
               Selecciona categoría
             </option>
             {categorias.map((categoria) => (
@@ -567,6 +638,7 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
           <select
+            className="select select-error w-full text-lg shadow-xl"
             value={equipoData.idTorneo}
             onChange={(e) =>
               setEquipoData({ ...equipoData, idTorneo: e.target.value })
@@ -581,52 +653,110 @@ const ModalLoad = ({ selectedOption }) => {
               </option>
             ))}
           </select>
-          <input
-            type="text"
-            placeholder="Nombre del equipo"
-            value={equipoData.nombre}
-            onChange={(e) =>
-              setEquipoData({ ...equipoData, nombre: e.target.value })
-            }
-          />
-          <button className="text-white" onClick={handleEquipoSubmit}>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+            </svg>
+
+            <input
+              type="text"
+              placeholder="Nombre del equipo"
+              value={equipoData.nombre}
+              onChange={(e) =>
+                setEquipoData({ ...equipoData, nombre: e.target.value })
+              }
+            />
+          </label>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleEquipoSubmit}
+          >
             Registrar Equipo
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Jugador" && (
-        <div>
-          <h2>Registrar Jugador</h2>
-          <input
-            type="text"
-            name="nombre"
-            placeholder="Nombre del jugador"
-            value={jugadorData.nombre}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="apellidoPaterno"
-            placeholder="Apellido Paterno"
-            value={jugadorData.apellidoPaterno}
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="apellidoMaterno"
-            placeholder="Apellido Materno"
-            value={jugadorData.apellidoMaterno}
-            onChange={handleInputChange}
-          />
-          <input
-            type="date"
-            name="fechaNacimiento"
-            value={jugadorData.fechaNacimiento}
-            onChange={handleInputChange}
-          />
-          <select name="idCategoria" onChange={handleCategoriaUserChange}>
-            <option value="" disabled>
+        <div className="space-y-4">
+          <h3 className="font-bold text-lg text-white">Registrar Jugador</h3>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="text"
+              name="nombre"
+              placeholder="Nombre del jugador"
+              value={jugadorData.nombre}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="text"
+              name="apellidoPaterno"
+              placeholder="Apellido Paterno"
+              value={jugadorData.apellidoPaterno}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="text"
+              name="apellidoMaterno"
+              placeholder="Apellido Materno"
+              value={jugadorData.apellidoMaterno}
+              onChange={handleInputChange}
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="date"
+              name="fechaNacimiento"
+              value={jugadorData.fechaNacimiento}
+              onChange={handleInputChange}
+            />
+          </label>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            name="idCategoria"
+            onChange={handleCategoriaUserChange}
+          >
+            <option value="" disabled selected>
               Selecciona categoría
             </option>
             {categorias.map((categoria, index) => (
@@ -636,6 +766,7 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
           <select
+            className="select select-error w-full text-lg shadow-xl"
             name="idEquipo"
             value={jugadorData.idEquipo}
             onChange={handleInputChange}
@@ -650,6 +781,7 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
           <select
+            className="select select-error w-full text-lg shadow-xl"
             name="posicion"
             value={jugadorData.posicion}
             onChange={handleInputChange}
@@ -664,6 +796,7 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
           <select
+            className="select select-error w-full text-lg shadow-xl"
             name="sexo"
             value={jugadorData.sexo}
             onChange={handleInputChange}
@@ -677,26 +810,47 @@ const ModalLoad = ({ selectedOption }) => {
               </option>
             ))}
           </select>
+          <label className="input input-bordered flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="number"
+              name="numeroCamisa"
+              placeholder="Número de playera"
+              value={jugadorData.numeroCamisa}
+              onChange={handleInputChange}
+            />
+          </label>
           <input
-            type="number"
-            name="numeroCamisa"
-            placeholder="Número de playera"
-            value={jugadorData.numeroCamisa}
-            onChange={handleInputChange}
+            type="file"
+            className="file-input file-input-bordered w-full"
+            accept=".jpg,.png"
+            onChange={handleFileChange}
           />
-          <input type="file" accept=".jpg,.png" onChange={handleFileChange} />
-          <button className="text-white" onClick={handleSubmitJugador}>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleSubmitJugador}
+          >
             Registrar Jugador
           </button>
         </div>
       )}
 
       {selectedOption === "Ingresar Partido" && (
-        <div>
-          <h2>Ingresar Partido</h2>
+        <div className="space-y-4">
+          <h3 className="font-bold text-lg text-white">Ingresar Partido</h3>
 
-          <select onChange={handleCategoriaChangePartido}>
-            <option value="" disabled>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            onChange={handleCategoriaChangePartido}
+          >
+            <option value="" disabled selected>
               Selecciona categoría
             </option>
             {categorias.map((categoria, index) => (
@@ -707,6 +861,7 @@ const ModalLoad = ({ selectedOption }) => {
           </select>
 
           <select
+            className="select select-error w-full text-lg shadow-xl"
             value={partidoData.idTorneo}
             onChange={(e) =>
               setPartidoData({ ...partidoData, idTorneo: e.target.value })
@@ -723,6 +878,7 @@ const ModalLoad = ({ selectedOption }) => {
           </select>
 
           <select
+            className="select select-error w-full text-lg shadow-xl"
             value={partidoData.idEquipoLocal}
             onChange={(e) =>
               setPartidoData({ ...partidoData, idEquipoLocal: e.target.value })
@@ -739,6 +895,7 @@ const ModalLoad = ({ selectedOption }) => {
           </select>
 
           <select
+            className="select select-error w-full text-lg shadow-xl"
             value={partidoData.idEquipoVisita}
             onChange={(e) =>
               setPartidoData({ ...partidoData, idEquipoVisita: e.target.value })
@@ -753,45 +910,58 @@ const ModalLoad = ({ selectedOption }) => {
               </option>
             ))}
           </select>
-
-          <input
-            type="date"
-            value={partidoData.fechaJuego}
-            onChange={(e) =>
-              setPartidoData({ ...partidoData, fechaJuego: e.target.value })
-            }
-          />
-          <input
-            type="time"
-            value={partidoData.horaInicioJuego}
-            onChange={(e) =>
-              setPartidoData({
-                ...partidoData,
-                horaInicioJuego: e.target.value,
-              })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Jornada"
-            value={partidoData.jornada}
-            onChange={(e) =>
-              setPartidoData({ ...partidoData, jornada: e.target.value })
-            }
-          />
-
-          <button className="text-white" onClick={handleSubmitPartido}>
+          <label className="input input-bordered flex items-center gap-2">
+            Fecha del juego:
+            <input
+              type="date"
+              value={partidoData.fechaJuego}
+              onChange={(e) =>
+                setPartidoData({ ...partidoData, fechaJuego: e.target.value })
+              }
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            Hora de inicio:
+            <input
+              type="time"
+              value={partidoData.horaInicioJuego}
+              onChange={(e) =>
+                setPartidoData({
+                  ...partidoData,
+                  horaInicioJuego: e.target.value,
+                })
+              }
+            />
+          </label>
+          <label className="input input-bordered flex items-center gap-2">
+            Jornada:
+            <input
+              type="number"
+              placeholder="Jornada"
+              value={partidoData.jornada}
+              onChange={(e) =>
+                setPartidoData({ ...partidoData, jornada: e.target.value })
+              }
+            />
+          </label>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleSubmitPartido}
+          >
             Registrar Partido
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Resultado" && (
-        <div>
-          <h2 className="text-white">Registrar Resultado</h2>
+        <div className="space-y-4">
+          <h3 className="font-bold text-lg text-white">Registrar Resultado</h3>
 
-          <select onChange={handleCategoriaChangePartido}>
-            <option value="" disabled>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            onChange={handleCategoriaChangePartido}
+          >
+            <option value="" disabled selected>
               Selecciona categoría
             </option>
             {categorias.map((categoria, index) => (
@@ -801,7 +971,11 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
 
-          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            value={resultadoData.idTorneo}
+            onChange={handlePartidoChange}
+          >
             <option value="" disabled>
               Selecciona Torneo
             </option>
@@ -815,6 +989,7 @@ const ModalLoad = ({ selectedOption }) => {
           {resultadoData.idTorneo !== "" && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setResultadoData({
                     ...resultadoData,
@@ -824,7 +999,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Torneo
                 </option>
                 {partidos.map((partido) => (
@@ -839,35 +1014,65 @@ const ModalLoad = ({ selectedOption }) => {
             </div>
           )}
           {resultadoData.idPartido !== "" && (
-            <div>
-              <input
-                type="number"
-                name="golesLocal"
-                placeholder="Goles equipo local"
-                value={resultadoData.golesLocal}
-                onChange={handleResultadoInputChange}
-              />
-              <input
-                type="number"
-                name="golesVisita"
-                placeholder="Goles equipo visitante"
-                value={resultadoData.golesVisita}
-                onChange={handleResultadoInputChange}
-              />
+            <div className="space-y-4">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+                </svg>
+
+                <input
+                  type="number"
+                  name="golesLocal"
+                  placeholder="Goles equipo local"
+                  value={resultadoData.golesLocal}
+                  onChange={handleResultadoInputChange}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+                </svg>
+
+                <input
+                  type="number"
+                  name="golesVisita"
+                  placeholder="Goles equipo visitante"
+                  value={resultadoData.golesVisita}
+                  onChange={handleResultadoInputChange}
+                />
+              </label>
             </div>
           )}
-          <button className="text-white" onClick={handleSubmitResultado}>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleSubmitResultado}
+          >
             Registrar Resultado
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Goleo Individual" && (
-        <div>
-          <h2 className="text-white">Registrar Goleo Individual</h2>
+        <div className="space-y-4">
+          <h2 className="font-bold text-lg text-white">
+            Registrar Goleo Individual
+          </h2>
 
-          <select onChange={handleCategoriaChangePartido}>
-            <option value="" disabled>
+          <select
+            onChange={handleCategoriaChangePartido}
+            className="select select-error w-full text-lg shadow-xl"
+          >
+            <option value="" disabled selected>
               Selecciona categoría
             </option>
             {categorias.map((categoria, index) => (
@@ -877,8 +1082,12 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
 
-          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
-            <option value="" disabled>
+          <select
+            value={resultadoData.idTorneo}
+            className="select select-error w-full text-lg shadow-xl"
+            onChange={handlePartidoChange}
+          >
+            <option value="" disabled selected>
               Selecciona Torneo
             </option>
             {torneos.map((torneo, index) => (
@@ -891,6 +1100,7 @@ const ModalLoad = ({ selectedOption }) => {
           {goleoData.idTorneo !== "" && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setGoleoData({
                     ...goleoData,
@@ -902,7 +1112,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Torneo
                 </option>
                 {partidos.map((partido) => (
@@ -919,6 +1129,7 @@ const ModalLoad = ({ selectedOption }) => {
           {goleoData.idPartido !== "" && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setGoleoData({
                     ...goleoData,
@@ -926,7 +1137,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Equipo
                 </option>
                 <option value={goleoData.nombreEquipoLocal}>
@@ -941,6 +1152,7 @@ const ModalLoad = ({ selectedOption }) => {
           {jugadoresGoleo.length > 0 && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setGoleoData({
                     ...goleoData,
@@ -949,7 +1161,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Jugador
                 </option>
                 {jugadoresGoleo.map((jugador, index) => (
@@ -965,26 +1177,44 @@ const ModalLoad = ({ selectedOption }) => {
           )}
           {goleoData.idJugador !== "" && (
             <div>
-              <input
-                type="number"
-                name="goles"
-                placeholder="Goles del jugador"
-                onChange={handleGoleoInputChange}
-              />
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+                </svg>
+                <input
+                  type="number"
+                  name="goles"
+                  placeholder="Goles del jugador"
+                  onChange={handleGoleoInputChange}
+                />
+              </label>
             </div>
           )}
-          <button className="text-white" onClick={handleSubmitGoleo}>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleSubmitGoleo}
+          >
             Registrar Goleo
           </button>
         </div>
       )}
 
       {selectedOption === "Registrar Goleo Total" && (
-        <div>
-          <h2 className="text-white">Registrar Goleo Total</h2>
+        <div className="space-y-4">
+          <h2 className="font-bold text-lg text-white">
+            Registrar Goleo Total
+          </h2>
 
-          <select onChange={handleCategoriaChangePartido}>
-            <option value="" disabled>
+          <select
+            onChange={handleCategoriaChangePartido}
+            className="select select-error w-full text-lg shadow-xl"
+          >
+            <option value="" disabled selected>
               Selecciona categoría
             </option>
             {categorias.map((categoria, index) => (
@@ -994,7 +1224,11 @@ const ModalLoad = ({ selectedOption }) => {
             ))}
           </select>
 
-          <select value={resultadoData.idTorneo} onChange={handlePartidoChange}>
+          <select
+            className="select select-error w-full text-lg shadow-xl"
+            value={resultadoData.idTorneo}
+            onChange={handlePartidoChange}
+          >
             <option value="" disabled>
               Selecciona Torneo
             </option>
@@ -1008,6 +1242,7 @@ const ModalLoad = ({ selectedOption }) => {
           {goleoTotal.idTorneo !== "" && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setGoleoTotal({
                     ...goleoTotal,
@@ -1019,7 +1254,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Torneo
                 </option>
                 {partidos.map((partido) => (
@@ -1036,6 +1271,7 @@ const ModalLoad = ({ selectedOption }) => {
           {goleoTotal.idPartido !== "" && (
             <div>
               <select
+                className="select select-error w-full text-lg shadow-xl"
                 onChange={(e) =>
                   setGoleoTotal({
                     ...goleoTotal,
@@ -1043,7 +1279,7 @@ const ModalLoad = ({ selectedOption }) => {
                   })
                 }
               >
-                <option value="" disabled>
+                <option value="" disabled selected>
                   Selecciona Equipo
                 </option>
                 <option value={goleoTotal.nombreEquipoLocal}>
@@ -1056,28 +1292,64 @@ const ModalLoad = ({ selectedOption }) => {
             </div>
           )}
           {goleoTotal.idEquipo !== "" && (
-            <div>
-              <input
-                type="number"
-                name="golesAnotados"
-                placeholder="Goles Anotados"
-                onChange={handleGoleoTotalInputChange}
-              />
-              <input
-                type="number"
-                name="golesRecibidos"
-                placeholder="Goles Recibidos"
-                onChange={handleGoleoTotalInputChange}
-              />
-              <input
-                type="number"
-                name="resultado"
-                placeholder="Resultado"
-                onChange={handleGoleoTotalInputChange}
-              />
+            <div className="space-y-4">
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+                </svg>
+
+                <input
+                  type="number"
+                  name="golesAnotados"
+                  placeholder="Goles Anotados"
+                  onChange={handleGoleoTotalInputChange}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+                </svg>
+
+                <input
+                  type="number"
+                  name="golesRecibidos"
+                  placeholder="Goles Recibidos"
+                  onChange={handleGoleoTotalInputChange}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path d="M.102 2.223a5.225 5.225 0 0 0 6.523 7.426l6.879 6.878a1.5 1.5 0 1 0 2.121-2.121l-6.878-6.879A5.225 5.225 0 0 0 2.222.102l1.415 1.415a2.5 2.5 0 0 1 2.657 4.116l-.643.643a2.5 2.5 0 1 1-3.536-3.536l-.643-.643a5.225 5.225 0 0 0-2.07 1.126z" />
+                </svg>
+
+                <input
+                  type="number"
+                  name="resultado"
+                  placeholder="Resultado"
+                  onChange={handleGoleoTotalInputChange}
+                />
+              </label>
             </div>
           )}
-          <button className="text-white" onClick={handleSubmitGoleoTotal}>
+          <button
+            className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+            onClick={handleSubmitGoleoTotal}
+          >
             Registrar Goleo Total
           </button>
         </div>

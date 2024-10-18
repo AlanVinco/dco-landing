@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
 import VisitCount from "./VisitCount";
-import { registerGuestConnection } from '../redux/actions/loginSlice';
+import { registerGuestConnection } from "../redux/actions/loginSlice";
 
-import logo from "../assets/dco-hd-sinfondo.png";
+import logo from "../assets/dco-logo-final-no-bg.png";
 
 const Home = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -35,25 +35,24 @@ const Home = () => {
   };
 
   useEffect(() => {
-    registerGuestConnection()
-  }, [])
-  
+    registerGuestConnection();
+  }, []);
 
   return (
-    <div className="bg-[#06938D]">
+    <div className="bg-[#1A1A2E]">
       <div className="">
         <div className="flex justify-center">
           <img src={logo} alt="logo" className="w-64" />
         </div>
       </div>
 
-      <div className="navbar bg-[#06938D]">
+      <div className="navbar bg-[#8B0000]">
         <div className="navbar-start">
           <div className="dropdown">
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost lg:hidden text-white text-xl"
+              className="btn btn-ghost lg:hidden text-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +71,7 @@ const Home = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-[#06938D] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
                 <a>Inicio</a>
@@ -80,7 +79,7 @@ const Home = () => {
               <li>
                 <details>
                   <summary>Torneos</summary>
-                  <ul className="p-2 bg-[#06938D]">
+                  <ul className="p-2 bg-[#8B0000]">
                     <li>
                       <a>Torneo</a>
                     </li>
@@ -93,7 +92,7 @@ const Home = () => {
               <li>
                 <details>
                   <summary>Equipos</summary>
-                  <ul className="p-2 bg-[#06938D]">
+                  <ul className="p-2 bg-[#8B0000]">
                     <li>
                       <a>Equipo</a>
                     </li>
@@ -122,7 +121,7 @@ const Home = () => {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 text-white">
+          <ul className="menu menu-horizontal px-1 text-white text-lg">
             <li>
               <Link to="/">Inicio</Link>
             </li>
@@ -144,14 +143,14 @@ const Home = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass text-xl"
             >
               Cerrar Sesión
             </button>
           ) : (
             <Link
               to="/login"
-              className="btn btn-outline btn-accent bg-[#F3F4F6]"
+              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass text-xl"
             >
               Iniciar Sesión
             </Link>
@@ -159,7 +158,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="hero bg-[url(https://wallpaperaccess.com/full/7488635.jpg)] bg-cover bg-center min-h-screen">
+      <div className="hex-main-background hero bg-gradient-to-t from-[#1A1A2E] from-10% via-[#003366] via-30% to-[#1A1A2E] to-90% bg-cover bg-center min-h-screen">
         {/* <div className="hero-content flex-col lg:flex-row card glass">
           <img
             src="https://i.pinimg.com/564x/ba/89/0f/ba890f0fb64a8795fc5135b48c785c2e.jpg"
@@ -178,9 +177,27 @@ const Home = () => {
         <Outlet />
       </div>
       {/* Footer*/}
-      <footer className=" text-black py-4 flex justify-center items-center ">
-        <div>
-          <VisitCount num={visitas} />
+      <footer className=" text-black py-4 flex justify-center items-center bg-[#8B0000] rounded-t-box shadow-xl">
+        <div className="stats shadow-xl rounded-box card glass ">
+          <div className="stat">
+            <div className="stat-figure text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block h-8 w-8 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"
+                ></path>
+              </svg>
+            </div>
+            <div className="stat-title text-white">Número de visitas:</div>
+            <div className="stat-value text-white">{visitas}</div>
+          </div>
         </div>
       </footer>
     </div>

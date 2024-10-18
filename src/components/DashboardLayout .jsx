@@ -65,7 +65,7 @@ const DashboardLayout = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-[#06938D] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
                 <a>Inicio</a>
@@ -73,7 +73,7 @@ const DashboardLayout = () => {
               <li>
                 <details>
                   <summary>Torneos</summary>
-                  <ul className="p-2 bg-[#06938D]">
+                  <ul className="p-2 bg-[#8B0000]">
                     <li>
                       <a>Torneo</a>
                     </li>
@@ -86,7 +86,7 @@ const DashboardLayout = () => {
               <li>
                 <details>
                   <summary>Equipos</summary>
-                  <ul className="p-2 bg-[#06938D]">
+                  <ul className="p-2 bg-[#8B0000]">
                     <li>
                       <a>Equipo</a>
                     </li>
@@ -115,7 +115,7 @@ const DashboardLayout = () => {
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 text-white">
+          <ul className="menu menu-horizontal px-1 text-white text-xl">
             <li>
               <Link to="/dashboard">Inicio</Link>
             </li>
@@ -157,7 +157,7 @@ const DashboardLayout = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
+              className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass text-xl"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
