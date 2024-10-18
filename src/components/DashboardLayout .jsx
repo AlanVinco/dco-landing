@@ -159,6 +159,16 @@ const DashboardLayout = () => {
               onClick={handleLogout}
               className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70"
+              >
+                <path d="M10 0a2 2 0 0 1 2 2v4.5a.5.5 0 0 1-1 0V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-4.5a.5.5 0 0 1 1 0V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h8z" />
+                <path d="M16 8a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5z" />
+                <path d="M13.354 10.854a.5.5 0 0 1-.708-.708l1.647-1.647-1.647-1.647a.5.5 0 1 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2z" />
+              </svg>
               Cerrar Sesión
             </button>
           ) : (
@@ -179,7 +189,7 @@ const DashboardLayout = () => {
       <footer className=" text-black py-4 flex justify-center items-center bg-[#8B0000] rounded-t-box shadow-xl">
         <div className="stats shadow-xl rounded-box card glass ">
           <div className="stat">
-            <div className="stat-figure text-black">
+            <div className="stat-figure text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -194,8 +204,8 @@ const DashboardLayout = () => {
                 ></path>
               </svg>
             </div>
-            <div className="stat-title text-black">Número de visitas:</div>
-            <div className="stat-value text-black">{visitas}</div>
+            <div className="stat-title text-white">Número de visitas:</div>
+            <div className="stat-value text-white">{visitas}</div>
           </div>
         </div>
       </footer>
