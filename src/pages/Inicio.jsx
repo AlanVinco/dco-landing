@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { obtenerNoticiasLiga } from "../redux/actions/noticiasSlice";
-import logo from '../assets/dco-hd-sinfondo.png';
+import logo from "../assets/dco-hd-sinfondo.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,13 +22,19 @@ const Home = () => {
 
       {status === "loading" && (
         <div className="text-center">
-          <p className="text-lg">Cargando noticias...</p>
+          <span className="loading loading-infinity loading-lg text-white"></span>
         </div>
       )}
 
       {status === "failed" && (
-        <div className="text-center text-red-500">
-          <p>Error al cargar las noticias: {error}</p>
+        <div className="text-center text-red-500 text-2xl">
+          <h1>Error al cargar las noticias.</h1>
+          <label className="swap swap-flip text-9xl">
+            {/* this hidden checkbox controls the state */}
+            <input type="checkbox" />
+            <div className="swap-on">⚠</div>
+            <div className="swap-off">❌</div>
+          </label>
         </div>
       )}
 
@@ -36,17 +42,15 @@ const Home = () => {
         <div className="flex justify-center text-white animate__animated animate__flip">
           <div className="card glass w-96">
             <figure>
-              <img
-                src={logo}
-                alt="car!"
-              />
+              <img src={logo} alt="car!" />
             </figure>
             <div className="card-body">
               <h2 className="card-title">{noticias[0].nombre}</h2>
               <p>{noticias[0].descripcion}</p>
               <div className="card-actions justify-end">
                 <button className="">
-                  Fecha: {new Date(noticias[0].fechaInsert).toLocaleDateString()}
+                  Fecha:{" "}
+                  {new Date(noticias[0].fechaInsert).toLocaleDateString()}
                 </button>
               </div>
             </div>

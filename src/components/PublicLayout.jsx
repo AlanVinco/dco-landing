@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
-import VisitCount from "./VisitCount";
 import { registerGuestConnection } from "../redux/actions/loginSlice";
 
 import logo from "../assets/dco-logo-final-no-bg.png";

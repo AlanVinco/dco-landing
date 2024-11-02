@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 
-import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Torneos from "../pages/Torneos";
 import Administracion from "../pages/Administracion";
