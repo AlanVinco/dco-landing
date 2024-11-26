@@ -27,7 +27,7 @@ export const loginUser = createAsyncThunk(
       });
 
       if (!response.ok) {
-        throw new Error('Login fallido');
+        throw new Error('Error al iniciar sesión.');
       }
 
       const data = await response.json();
@@ -92,10 +92,8 @@ export const registerGuestConnection = async () => {
     }
 
     const data = await registerResponse.json();
-    console.log('Conexión registrada para invitado:', data);
     return data; // Retorna la respuesta si es necesario
   } catch (error) {
-    console.error('Error en registerGuestConnection:', error);
     return null;
   }
 };
@@ -110,6 +108,7 @@ const loginSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.error = null; // Limpia el error al cerrar sesión
       localStorage.removeItem('user'); // Limpia los datos del usuario en el localStorage
     },
   },
@@ -117,15 +116,17 @@ const loginSlice = createSlice({
     builder
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
+        state.error = null; // Limpia cualquier error previo al iniciar el proceso
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload; // Asigna los datos del usuario en el estado
+        state.error = null; // Asegura que no haya errores
         localStorage.setItem('user', JSON.stringify(action.payload)); // Guarda los datos del usuario en el localStorage
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload;
+        state.error = action.payload; // Almacena el error devuelto por la acción
       });
   },
 });

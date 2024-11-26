@@ -23,6 +23,26 @@ const Login = () => {
 
   return (
     <div className="hero min-h-screen hex-background bg-gray-100">
+      <button
+        className="fixed top-4 left-4 flex items-center justify-center w-10 h-10 bg-[#06938D] text-white rounded-full shadow-xl hover:bg-[#FD966F] transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
+        onClick={() => navigate("/")}
+        aria-label="Regresar al inicio"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold text-gray-700">
@@ -77,6 +97,11 @@ const Login = () => {
                     placeholder="Contraseña:"
                   />
                 </label>
+              </div>
+              <div className="my-3">
+                <Link className="text-[#06938D] cursor-pointer" to="/reset">
+                  Restablecer contraseña
+                </Link>
               </div>
 
               <div className="mt-7">

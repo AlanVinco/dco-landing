@@ -10,6 +10,7 @@ import Patrocinadores from "../pages/Patrocinadores";
 import Servicios from "../pages/Servicios";
 import Videos from "../pages/Videos";
 import Inicio from "../pages/Inicio";
+import Reset from "../pages/Reset"
 
 import DashboardLayout from "../components/DashboardLayout ";
 import PublicLayout from "../components/PublicLayout";
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+    },
+    {
+        path: "/reset",
+        element: <Reset />,
     },
     {
         path: "/dashboard",

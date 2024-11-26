@@ -10,6 +10,7 @@ import modalReducer from "./actions/modalSlice";
 import correcionesReducer from "./actions/correcionesSlice";
 import noticiasReducer from "./actions/noticiasSlice";
 import visitasReducer  from './actions/visitasSlice';
+import resetReducer from './actions/resetSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,5 +24,6 @@ export const store = configureStore({
     correcciones:correcionesReducer,
     noticias: noticiasReducer,
     visitas: visitasReducer,
+    reset: resetReducer,
   },
 });
