@@ -233,43 +233,127 @@ const adminSlice = createSlice({
       .addCase(fetchTorneos.fulfilled, (state, action) => {
         state.torneos = action.payload;
       })
-      // Para manejar el registro de categoría
+      // ##### REGISTRAR CATEGORIA
+      .addCase(registrarCategoria.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
       .addCase(registrarCategoria.fulfilled, (state, action) => {
-        // Aquí puedes manejar el éxito del registro de categoría
+        state.status = "succeeded"; // Estado exitoso
+        // Aquí puedes manejar el éxito de la acción si necesitas guardar datos
       })
-      // Para manejar el registro de torneo
-      .addCase(registrarTorneo.fulfilled, (state, action) => {
-        // Aquí puedes manejar el éxito del registro de torneo
-      })
-      // Para manejar el registro de equipo
-      .addCase(registrarEquipo.fulfilled, (state, action) => {
-        // Aquí puedes manejar el éxito del registro de equipo
+      .addCase(registrarCategoria.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
       })
 
-      // Para registrar un jugador
-      .addCase(registrarJugador.fulfilled, (state, action) => {
-        console.log("Jugador registrado", action.payload);
+      // ##### REGISTRAR TORNEO
+      .addCase(registrarTorneo.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
       })
-      // Para relacionar jugador y equipo
-      .addCase(relacionarJugadorEquipo.fulfilled, (state, action) => {
-        console.log("Jugador relacionado con equipo", action.payload);
+      .addCase(registrarTorneo.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
       })
-      .addCase(registrarPartido.fulfilled, (state, action) => {
-        console.log("Partido registrado", action.payload);
+      .addCase(registrarTorneo.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
       })
+
+      // ##### REGISTRAR EQUIPO
+      .addCase(registrarEquipo.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(registrarEquipo.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(registrarEquipo.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
+      // ##### REGISTRAR JUGADOR
+      .addCase(registrarJugador.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(registrarJugador.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(registrarJugador.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
+      // ##### REGISTRAR relacionar jugador y equipo
+      .addCase(relacionarJugadorEquipo.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(relacionarJugadorEquipo.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(relacionarJugadorEquipo.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
+      // ##### REGISTRAR PARTIDO
+      .addCase(registrarPartido.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(registrarPartido.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(registrarPartido.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
       .addCase(fetchJuegos.fulfilled, (state, action) => {
         state.juegos = action.payload;
       })
-      // Para manejar el registro del resultado del partido
-      .addCase(registrarResultado.fulfilled, (state, action) => {
-        console.log("Resultado registrado con éxito", action.payload);
+
+      // ##### REGISTRAR RESULTADO
+      .addCase(registrarResultado.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
       })
-      .addCase(registrarGoleoIndividual.fulfilled, (state, action) => {
-        console.log("Goleo Individual registrado con éxito", action.payload);
+      .addCase(registrarResultado.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
       })
-      .addCase(registrarGoleoTotal.fulfilled, (state, action) => {
-        console.log("Goleo Total registrado con éxito", action.payload);
-      });
+      .addCase(registrarResultado.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
+      // ##### REGISTRAR GOLEO INDIVIDUAL
+      .addCase(registrarGoleoIndividual.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(registrarGoleoIndividual.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(registrarGoleoIndividual.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
+
+      // ##### REGISTRAR GOLEO TOTAL
+      .addCase(registrarGoleoTotal.pending, (state) => {
+        state.status = "loading"; // Estado de carga
+        state.error = null; // Reinicia cualquier error previo
+      })
+      .addCase(registrarGoleoTotal.fulfilled, (state) => {
+        state.status = "succeeded"; // Estado exitoso
+      })
+      .addCase(registrarGoleoTotal.rejected, (state, action) => {
+        state.status = "failed"; // Estado fallido
+        state.error = action.error.message || "Error desconocido."; // Captura el mensaje de error
+      })
   },
 });
 

@@ -3,16 +3,6 @@ import { useDispatch } from "react-redux";
 import ModalLoad from "../components/ModalLoad";
 import { setModalContent } from "../redux/actions/modalSlice"; // Importamos la acción del slice
 
-const options = [
-  "Registrar Categoría",
-  "Registrar Torneo",
-  "Registrar Equipo",
-  "Registrar Jugador",
-  "Ingresar Partido",
-  "Registrar Resultado",
-  "Registrar Goleo Individual",
-  "Registrar Goleo Total",
-];
 
 const AdminSelector = () => {
   const [selectedOption, setSelectedOption] = useState("");

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   registrarCategoria,
   registrarTorneo,
@@ -11,9 +11,38 @@ import {
   registrarGoleoIndividual,
   registrarGoleoTotal,
 } from "../redux/actions/adminSlice"; // Acciones de redux para realizar los POST
+import Alert from "../components/Alert";
 
 const ModalLoad = ({ selectedOption }) => {
   const dispatch = useDispatch();
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+
+  //Registrar Categoria:
+  const statusAdmin = useSelector((state) => state.admin.status); // Estado del registro
+
+  //Alertas:
+  const showSuccessAlert = (value) => {
+    setAlertMessage(`Se guardo correctamente`);
+    setAlertType("success");
+  };
+
+  const showErrorAlert = () => {
+    setAlertMessage("A ocurrido un error.");
+    setAlertType("error");
+  };
+
+  const handleCloseAlert = () => {
+    setAlertMessage(""); // Esto hará que la alerta se cierre
+  };
+
+  useEffect(() => {
+    if (statusAdmin === "succeeded") {
+      showSuccessAlert();
+    } else if (statusAdmin === "failed") {
+      showErrorAlert();
+    }
+  }, [statusAdmin]); // Se ejecuta cuando cambian estos valores
 
   const [categoriaData, setCategoriaData] = useState({
     categoria: "",
@@ -182,7 +211,6 @@ const ModalLoad = ({ selectedOption }) => {
   // Fetch equipos según la categoría seleccionada
   const handleCategoriaUserChange = (e) => {
     const idCategoria = e.target.value;
-    console.log(idCategoria);
     fetch(`https://www.dcoapi.somee.com/api/ObtenerDatos/ObtenerEquipos`)
       .then((res) => res.json())
       .then((data) =>
@@ -333,7 +361,6 @@ const ModalLoad = ({ selectedOption }) => {
         // } else {
         //   alert("Hubo un error al registrar el resultado");
         // }
-        console.log("se enviaron");
       });
     } else {
       alert("Todos los campos son requeridos.");
@@ -364,7 +391,6 @@ const ModalLoad = ({ selectedOption }) => {
   };
 
   const handleSubmitGoleo = () => {
-    console.log(goleoData);
     const { idPartido, idTorneo, idEquipo, idJugador, numeroJugador, goles } =
       goleoData;
 
@@ -383,7 +409,6 @@ const ModalLoad = ({ selectedOption }) => {
         // } else {
         //   alert("Hubo un error al registrar el resultado");
         // }
-        console.log("se enviaron");
       });
     } else {
       alert("Todos los campos son requeridos.");
@@ -487,7 +512,6 @@ const ModalLoad = ({ selectedOption }) => {
         // } else {
         //   alert("Hubo un error al registrar el resultado");
         // }
-        console.log("se enviaron");
       });
     } else {
       alert("Todos los campos son requeridos.");
@@ -496,6 +520,14 @@ const ModalLoad = ({ selectedOption }) => {
 
   return (
     <div>
+      <div className="fixed bottom-0 right-0 z-50">
+      <Alert
+        message={alertMessage}
+        type={alertType}
+        duration={3000}
+        onClose={handleCloseAlert}
+      />
+      </div>
       {selectedOption === "Registrar Categoría" && (
         <div className="space-y-4">
           <h3 className="font-bold text-lg text-white">Registrar Categoría</h3>
@@ -567,6 +599,8 @@ const ModalLoad = ({ selectedOption }) => {
               }
             />
           </label>
+          {/* <span className="my-3 text-red-500">Todos los campos son requeridos.</span> */}
+          <br />
           <button
             className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
             onClick={handleCategoriaSubmit}

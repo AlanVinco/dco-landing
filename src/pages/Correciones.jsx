@@ -1,7 +1,8 @@
 // Correcciones.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { insertarFotoJugador } from "../redux/actions/correcionesSlice";
+import Alert from "../components/Alert";
 
 const Correcciones = () => {
   const dispatch = useDispatch();
@@ -9,6 +10,23 @@ const Correcciones = () => {
   const [fileData, setFileData] = useState(null);
   const [fileName, setFileName] = useState("");
   const [fileExtension, setFileExtension] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("");
+
+  //Alertas:
+  const showSuccessAlert = (value) => {
+    setAlertMessage(`Se guardo correctamente`);
+    setAlertType("success");
+  };
+
+  const showErrorAlert = () => {
+    setAlertMessage("A ocurrido un error.");
+    setAlertType("error");
+  };
+
+  const handleCloseAlert = () => {
+    setAlertMessage(""); // Esto hará que la alerta se cierre
+  };
 
   const { status, error } = useSelector((state) => state.correcciones);
 
@@ -43,6 +61,14 @@ const Correcciones = () => {
 
     dispatch(insertarFotoJugador(formData));
   };
+
+  useEffect(() => {
+    if (status === "succeeded") {
+      showSuccessAlert();
+    } else if (status === "failed") {
+      showErrorAlert();
+    }
+  }, [status]); // Se ejecuta cuando cambian estos valores
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 shadow-lg rounded-md glass animate__animated animate__rubberBand">
@@ -90,17 +116,16 @@ const Correcciones = () => {
         >
           {status === "loading" ? "Subiendo..." : "Agregar"}
         </button>
-
-        {status === "failed" && (
-          <p className="text-red-500 text-sm mt-2">Error: {error}</p>
-        )}
-
-        {status === "succeeded" && (
-          <p className="text-green-500 text-sm mt-2">
-            Archivo subido con éxito
-          </p>
-        )}
       </form>
+      <div className="my-5">
+        <br />
+      <Alert
+        message={alertMessage}
+        type={alertType}
+        duration={3000}
+        onClose={handleCloseAlert}
+      />
+      </div>
     </div>
   );
 };
