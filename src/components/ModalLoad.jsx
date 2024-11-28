@@ -291,10 +291,7 @@ const ModalLoad = ({ selectedOption }) => {
     ) {
       dispatch(registrarPartido(partidoData)).then((response) => {
         if (response.payload.success) {
-          alert("Partido registrado con éxito");
           // Cerrar modal o limpiar el formulario si es necesario
-        } else {
-          alert("Hubo un error al registrar el partido");
         }
       });
     } else {
