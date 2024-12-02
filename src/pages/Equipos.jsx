@@ -42,7 +42,10 @@ function Equipos() {
     // Mover el scroll hacia el modal
     setTimeout(() => {
       if (modalRef.current) {
-        modalRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        modalRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }
     }, 100);
   };
@@ -129,12 +132,17 @@ function Equipos() {
           </table>
         </div>
       )}
-      {selectedCategoria && selectedEquipo && jugadores.length === 0 && <div className="text-white">No se encontraron registros.</div>}
+      {selectedCategoria && selectedEquipo && jugadores.length === 0 && (
+        <div className="text-white">No se encontraron registros.</div>
+      )}
 
       {/* Modal */}
       {showModal && (
-        <div ref={modalRef} className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[#8B0000]/90 p-6 rounded-lg max-w-lg text-white w-96 shadow-xl">
+        <div
+          ref={modalRef}
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        >
+          <div className="bg-[#00AF50]/90 p-6 rounded-lg max-w-lg text-white w-96 shadow-xl">
             <button
               onClick={closeModal}
               className="text-white hover:text-gray-700 mb-4 float-right"
@@ -182,7 +190,9 @@ function Equipos() {
             {jugadorDetalle && (
               <div className="mb-6">
                 <h3 className="text-xl font-bold mb-4">Registro QR</h3>
-                <QRCode value={jugadorDetalle.identificador.toString()} />
+                <QRCode
+                  value={`ID: ${jugadorDetalle.identificador}\nJugador: ${jugadorDetalle.jugador}\nPlayera: ${jugadorDetalle.playera}\nFecha Nacimiento: ${jugadorDetalle.fechaNacimiento}\nEdad: ${jugadorDetalle.edad}\n${window.location.origin}`}
+                />
               </div>
             )}
           </div>

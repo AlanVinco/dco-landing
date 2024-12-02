@@ -40,7 +40,7 @@ const Torneos = () => {
     dispatch(setSelectedCategoria(idCategoria));
     dispatch(fetchEquipos(idCategoria));
     dispatch(fetchTorneos(idCategoria));
-    dispatch(setSelectedTorneo(""))
+    dispatch(setSelectedTorneo(""));
     setOption("");
   };
 
@@ -217,13 +217,16 @@ const Torneos = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {tablaGoleoIndividual.map((row, index) => (
-                          <tr key={index}>
-                            <td>{row.nombre}</td>
-                            <td>{row.goles}</td>
-                            <td>{row.equipo}</td>
-                          </tr>
-                        ))}
+                        {tablaGoleoIndividual
+                          .slice() // Hacer una copia para evitar modificar el array original
+                          .sort((a, b) => b.goles - a.goles) // Ordenar por goles de mayor a menor
+                          .map((row, index) => (
+                            <tr key={index}>
+                              <td>{row.nombre}</td>
+                              <td>{row.goles}</td>
+                              <td>{row.equipo}</td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -240,7 +243,6 @@ const Torneos = () => {
                     <table className="table text-xl">
                       <thead>
                         <tr className="text-white text-xl">
-                          <th>idPartido</th>
                           <th>Partido</th>
                           <th>Jornada</th>
                         </tr>
@@ -248,7 +250,6 @@ const Torneos = () => {
                       <tbody>
                         {calendarioGoleo.map((row, index) => (
                           <tr key={index}>
-                            <td>{row.idPartido}</td>
                             <td>{row.partido}</td>
                             <td>{row.jornada}</td>
                           </tr>
@@ -289,10 +290,9 @@ const Torneos = () => {
                   </table>
                 </div>
               )}
-              {option === "Calendario" &&
-                calendario.length === 0 && (
-                  <div>No se encontraron resultados.</div>
-                )}
+              {option === "Calendario" && calendario.length === 0 && (
+                <div>No se encontraron resultados.</div>
+              )}
             </div>
           </div>
         </div>

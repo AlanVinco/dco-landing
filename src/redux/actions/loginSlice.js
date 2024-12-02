@@ -1,16 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Función para obtener la IP del usuario
-const fetchUserIP = async () => {
-  try {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  } catch (error) {
-    console.error('Error fetching IP:', error);
-    return null;
-  }
-};
+// // Función para obtener la IP del usuario
+// const fetchUserIP = async () => {
+//   try {
+//     const response = await fetch('https://api.ipify.org?format=json');
+//     const data = await response.json();
+//     return data.ip;
+//   } catch (error) {
+//     console.error('Error fetching IP:', error);
+//     return null;
+//   }
+// };
 
 // Acción asíncrona para realizar el login
 export const loginUser = createAsyncThunk(
@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk(
       }
 
       // Obtener la IP del usuario
-      const userIP = await fetchUserIP();
+      // const userIP = await fetchUserIP();
 
       // Realizar el segundo POST para registrar la conexión
       const registerResponse = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/RegistraConexion_1_2', {
@@ -49,7 +49,7 @@ export const loginUser = createAsyncThunk(
           idTipoUsuario: data[0].idTipoUsuario,
           idUsuario: 17,
           alias: "Invitado",
-          ip: userIP || '38.49.137.173',
+          ip:'192.168.7.7',
           nombreDispositivo: 'pruebaAPI', // Puedes ajustar esto según sea necesario
         }),
       });
@@ -70,7 +70,7 @@ export const loginUser = createAsyncThunk(
 export const registerGuestConnection = async () => {
   try {
     // Obtener la IP del usuario
-    const userIP = await fetchUserIP();
+    // const userIP = await fetchUserIP();
 
     // Realizar el POST para registrar la conexión como invitado
     const registerResponse = await fetch('https://www.dcoapi.somee.com/api/EnviarDatos/RegistraConexion_1_2', {
@@ -79,10 +79,10 @@ export const registerGuestConnection = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        idTipoUsuario: 1001,
+        idTipoUsuario: 1006,
         idUsuario: 17,
         alias: "Invitado",
-        ip: userIP || '38.49.137.173', // Usa la IP obtenida o un mensaje por defecto si falla
+        ip:'192.168.7.7', // Usa la IP obtenida o un mensaje por defecto si falla
         nombreDispositivo: "pruebaAPI",
       }),
     });

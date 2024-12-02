@@ -23,8 +23,66 @@ const ModalLoad = ({ selectedOption }) => {
 
   //Alertas:
   const showSuccessAlert = (value) => {
-    setAlertMessage(`Se guardo correctamente`);
+    setAlertMessage(`Se guardó correctamente`);
     setAlertType("success");
+    setCategoriaData({
+      categoria: "",
+      edadMinima: "",
+      edadMaxima: "",
+      idLiga: 4,
+    });
+    setTorneoData({
+      nombreTorneo: "",
+      idCategoria: "",
+      numeroEquipos: 80,
+    });
+    setEquipoData({
+      nombre: "",
+      idTorneo: "",
+    });
+    setJugadorData({
+      nombre: "",
+      apellidoPaterno: "",
+      apellidoMaterno: "",
+      fechaNacimiento: "",
+      posicion: "",
+      sexo: "",
+      idEquipo: "",
+      numeroCamisa: "",
+      archivo: "",
+      nombreArchivo: "",
+      extension: "",
+    });
+    setPartidoData({
+      idEquipoLocal: "",
+      idEquipoVisita: "",
+      fechaJuego: "",
+      horaInicioJuego: "",
+      idTorneo: "",
+      jornada: "",
+    });
+    setResultadoData({
+      idPartido: "",
+      golesLocal: "",
+      golesVisita: "",
+      idEquipoLocal: "",
+      idEquipoVisita: "",
+      idTorneo: "",
+    });
+    setGoleoData({
+      idTorneo: "",
+      idPartido: "",
+      idEquipo: "",
+      idJugador: "",
+      numeroJugador: "",
+      goles: "",
+  
+      equipoSeleccionado: "",
+      idEquipoLocal: "",
+      idEquipoVisita: "",
+      nombreEquipoLocal: "",
+      nombreEquipoVisita: "",
+    });
   };
 
   const showErrorAlert = () => {
@@ -187,7 +245,6 @@ const ModalLoad = ({ selectedOption }) => {
     if (
       nombre &&
       apellidoPaterno &&
-      apellidoMaterno &&
       fechaNacimiento &&
       posicion &&
       sexo &&
@@ -521,7 +578,7 @@ const ModalLoad = ({ selectedOption }) => {
       <Alert
         message={alertMessage}
         type={alertType}
-        duration={3000}
+        duration={1000}
         onClose={handleCloseAlert}
       />
       </div>
@@ -1180,7 +1237,7 @@ const ModalLoad = ({ selectedOption }) => {
               </select>
             </div>
           )}
-          {jugadoresGoleo.length > 0 && (
+          {jugadoresGoleo.length > 0 && goleoData.idPartido !== "" &&(
             <div>
               <select
                 className="select select-error w-full text-lg shadow-xl"

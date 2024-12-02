@@ -104,18 +104,6 @@ const AdminSelector = () => {
                 Registrar Goleo Individual
               </button>
             </li>
-            <li>
-              <button
-                className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass mr-1 mb-1"
-                onClick={(event) => {
-                  document.getElementById("my_modal_3").showModal();
-                  handleOptionChange(event);
-                }}
-                value={"Registrar Goleo Total"}
-              >
-                Registrar Goleo Total
-              </button>
-            </li>
           </ul>
         </div>
       </div>

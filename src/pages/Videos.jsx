@@ -80,6 +80,7 @@ const Videos = () => {
             ))}
         </div>
       </div>
+      <h1 className="text-white">Acerca el mouse al video y usa la rueda del ratón para desplazarlos.</h1>
 
       {isAuthenticated && (
         <div className="mt-4">

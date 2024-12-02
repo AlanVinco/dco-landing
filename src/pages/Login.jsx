@@ -119,7 +119,7 @@ const Login = () => {
               </div>
             </form>
 
-            {error && <p className="mt-3 text-red-500">{error}</p>}
+            {error && <p className="mt-3 text-red-500">Ocurrio un error.</p>}
           </div>
         </div>
       </div>
