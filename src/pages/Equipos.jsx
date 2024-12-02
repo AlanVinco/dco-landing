@@ -101,9 +101,9 @@ function Equipos() {
       {/* Tabla de Jugadores */}
       {jugadores.length > 0 && (
         <div className="overflow-x-auto">
-          <table className="table text-white text-xl">
+          <table className="table text-gray-300 text-xl">
             <thead>
-              <tr className="text-white text-xl">
+              <tr className="text-black text-xl">
                 <th>Nombre</th>
                 <th>Playera</th>
                 <th>Edad</th>

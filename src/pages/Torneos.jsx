@@ -164,13 +164,13 @@ const Torneos = () => {
       {option != "" && (
         <div className="card glass my-5">
           <div className="card-body">
-            <div className="text-white">
+            <div className="text-gray-300">
               {/* Conditionally render tables based on selected option */}
               {option === "Tabla General" && tablaGeneral.length > 0 && (
                 <div className="overflow-x-auto">
                   <table className="table text-xl">
                     <thead>
-                      <tr className="text-white text-xl">
+                      <tr className="text-black text-xl">
                         <th>Equipo</th>
                         <th>Puntos</th>
                         <th>JJ</th>
@@ -210,7 +210,7 @@ const Torneos = () => {
                   <div className="overflow-x-auto">
                     <table className="table text-xl">
                       <thead>
-                        <tr className="text-white text-xl">
+                        <tr className="text-black text-xl">
                           <th>Nombre</th>
                           <th>Goles</th>
                           <th>Equipo</th>
@@ -242,7 +242,7 @@ const Torneos = () => {
                   <div className="overflow-x-auto">
                     <table className="table text-xl">
                       <thead>
-                        <tr className="text-white text-xl">
+                        <tr className="text-black text-xl">
                           <th>Partido</th>
                           <th>Jornada</th>
                         </tr>
@@ -269,7 +269,7 @@ const Torneos = () => {
                 <div className="overflow-x-auto">
                   <table className="table text-xl">
                     <thead>
-                      <tr className="text-white text-xl">
+                      <tr className="text-black text-xl">
                         <th>Partido</th>
                         <th>Fecha</th>
                         <th>Hora</th>

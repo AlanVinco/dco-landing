@@ -68,48 +68,28 @@ const DashboardLayout = () => {
               className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>Inicio</a>
+                <Link to="/dashboard">Inicio</Link>
               </li>
               <li>
-                <details>
-                  <summary>Torneos</summary>
-                  <ul className="p-2 bg-[#8B0000]">
-                    <li>
-                      <a>Torneo</a>
-                    </li>
-                    <li>
-                      <a>Torneo</a>
-                    </li>
-                  </ul>
-                </details>
+                <Link to="/dashboard/torneos">Torneos</Link>
               </li>
               <li>
-                <details>
-                  <summary>Equipos</summary>
-                  <ul className="p-2 bg-[#8B0000]">
-                    <li>
-                      <a>Equipo</a>
-                    </li>
-                    <li>
-                      <a>Equipo</a>
-                    </li>
-                  </ul>
-                </details>
+                <Link to="/dashboard/equipos">Equipos</Link>
               </li>
               <li>
-                <a>Administración</a>
+                <Link to="/dashboard/administracion">Administración</Link>
               </li>
               <li>
-                <a>Correciónes</a>
+                <Link to="/dashboard/correciones">Correciónes</Link>
               </li>
               <li>
-                <a>Patrocinadores</a>
+                <Link to="/dashboard/patrocinadores">Patrocinadores</Link>
               </li>
               <li>
-                <a>Servicios</a>
+                <Link to="/dashboard/servicios">Servicios</Link>
               </li>
               <li>
-                <a>Videos</a>
+                <Link to="/dashboard/videos">Videos</Link>
               </li>
             </ul>
           </div>
@@ -120,17 +100,6 @@ const DashboardLayout = () => {
               <Link to="/dashboard">Inicio</Link>
             </li>
             <li>
-              {/* <details>
-                <summary>Torneos</summary>
-                <ul className="p-2 bg-[#06938D]">
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                  <li>
-                    <a>Torneo</a>
-                  </li>
-                </ul>
-              </details> */}
               <Link to="/dashboard/torneos">Torneos</Link>
             </li>
             <li>

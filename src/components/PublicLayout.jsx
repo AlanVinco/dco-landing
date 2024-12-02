@@ -73,48 +73,19 @@ const Home = () => {
               className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>Inicio</a>
+                <Link to="/">Inicio</Link>
               </li>
               <li>
-                <details>
-                  <summary>Torneos</summary>
-                  <ul className="p-2 bg-[#8B0000]">
-                    <li>
-                      <a>Torneo</a>
-                    </li>
-                    <li>
-                      <a>Torneo</a>
-                    </li>
-                  </ul>
-                </details>
+                <Link to="/torneos">Torneos</Link>
               </li>
               <li>
-                <details>
-                  <summary>Equipos</summary>
-                  <ul className="p-2 bg-[#8B0000]">
-                    <li>
-                      <a>Equipo</a>
-                    </li>
-                    <li>
-                      <a>Equipo</a>
-                    </li>
-                  </ul>
-                </details>
+                <Link to="/patrocinadores">Patrocinadores</Link>
               </li>
               <li>
-                <a>Administración</a>
+                <Link to="/servicios">Servicios</Link>
               </li>
               <li>
-                <a>Correciónes</a>
-              </li>
-              <li>
-                <a>Patrocinadores</a>
-              </li>
-              <li>
-                <a>Servicios</a>
-              </li>
-              <li>
-                <a>Videos</a>
+                <Link to="/videos">Videos</Link>
               </li>
             </ul>
           </div>

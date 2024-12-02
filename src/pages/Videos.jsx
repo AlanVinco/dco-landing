@@ -65,7 +65,7 @@ const Videos = () => {
       <Alert
         message={alertMessage}
         type={alertType}
-        duration={3000}
+        duration={2000}
         onClose={handleCloseAlert}
       />
       <div className="hero-content flex-col lg:flex-row card glass">
@@ -133,7 +133,7 @@ const LazyLoadIframe = ({ src }) => {
     <div className="carousel-item h-full" ref={iframeRef}>
       {isVisible ? (
         <iframe
-          className="w-full aspect-video"
+          className="lg:w-full aspect-video w-1/2"
           src={src}
           title={`video-${src}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
