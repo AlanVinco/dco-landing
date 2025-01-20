@@ -183,23 +183,27 @@ const Torneos = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {tablaGeneral.map((row, index) => (
-                        <tr key={index}>
-                          <td>{row.equipo}</td>
-                          <td>{row.puntos}</td>
-                          <td>{row.jj}</td>
-                          <td>{row.jg}</td>
-                          <td>{row.je}</td>
-                          <td>{row.gf}</td>
-                          <td>{row.gc}</td>
-                          <td>{row.gd}</td>
-                          {/* Other table data */}
-                        </tr>
-                      ))}
+                      {tablaGeneral
+                        .slice() 
+                        .sort((a, b) => b.puntos - a.puntos) 
+                        .map((row, index) => (
+                          <tr key={index}>
+                            <td>{row.equipo}</td>
+                            <td>{row.puntos}</td>
+                            <td>{row.jj}</td>
+                            <td>{row.jg}</td>
+                            <td>{row.je}</td>
+                            <td>{row.gf}</td>
+                            <td>{row.gc}</td>
+                            <td>{row.gd}</td>
+                            {/* Other table data */}
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
               )}
+
               {option === "Tabla General" && tablaGeneral.length === 0 && (
                 <div>No se encontraron resultados.</div>
               )}
@@ -237,27 +241,30 @@ const Torneos = () => {
                 )}
 
               {/* Render for Calendario de Goleos */}
-              {option === "Calendario de Goleos" &&
-                calendarioGoleo.length > 0 && (
-                  <div className="overflow-x-auto">
-                    <table className="table text-xl">
-                      <thead>
-                        <tr className="text-black text-xl">
-                          <th>Partido</th>
-                          <th>Jornada</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {calendarioGoleo.map((row, index) => (
+              {option === "Calendario de Goleos" && calendarioGoleo.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="table text-xl">
+                    <thead>
+                      <tr className="text-black text-xl">
+                        <th>Partido</th>
+                        <th>Jornada</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {calendarioGoleo
+                        .slice() // Hacemos una copia del array para no mutar el original
+                        .sort((a, b) => b.jornada - a.jornada) // Ordenamos por "Jornada" de mayor a menor
+                        .map((row, index) => (
                           <tr key={index}>
                             <td>{row.partido}</td>
                             <td>{row.jornada}</td>
                           </tr>
                         ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
 
               {option === "Calendario de Goleos" &&
                 calendarioGoleo.length === 0 && (
