@@ -167,7 +167,7 @@ const Torneos = () => {
             <div className="text-gray-300">
               {/* Conditionally render tables based on selected option */}
               {option === "Tabla General" && tablaGeneral.length > 0 && (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto w-64 md:w-full">
                   <table className="table text-xl">
                     <thead>
                       <tr className="text-black text-xl">
@@ -211,8 +211,8 @@ const Torneos = () => {
               {/* Render for Tabla de Goleo Individual */}
               {option === "Tabla de Goleo Individual" &&
                 tablaGoleoIndividual.length > 0 && (
-                  <div className="overflow-x-auto">
-                    <table className="table text-xl">
+                  <div className="overflow-x-auto w-64 md:w-full">
+                  <table className="table text-xl">
                       <thead>
                         <tr className="text-black text-xl">
                           <th>Nombre</th>
@@ -242,7 +242,7 @@ const Torneos = () => {
 
               {/* Render for Calendario de Goleos */}
               {option === "Calendario de Goleos" && calendarioGoleo.length > 0 && (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto w-64 md:w-full">
                   <table className="table text-xl">
                     <thead>
                       <tr className="text-black text-xl">
@@ -273,7 +273,7 @@ const Torneos = () => {
 
               {/* Render for Calendario */}
               {option === "Calendario" && calendario.length > 0 && (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto w-64 md:w-full">
                   <table className="table text-xl">
                     <thead>
                       <tr className="text-black text-xl">

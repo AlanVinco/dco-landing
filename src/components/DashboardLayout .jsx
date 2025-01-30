@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
@@ -13,7 +13,14 @@ const DashboardLayout = () => {
   const visitas = useSelector((state) =>
     state.visitas.visitas.length > 0 ? state.visitas.visitas[0].idConexion : 0
   );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
   useEffect(() => {
     const token = localStorage.getItem("user");
     if (token) {
@@ -47,6 +54,7 @@ const DashboardLayout = () => {
               tabIndex={0}
               role="button"
               className="btn btn-ghost lg:hidden text-white text-xl"
+              onClick={toggleDropdown}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +71,8 @@ const DashboardLayout = () => {
                 />
               </svg>
             </div>
-            <ul
+            {isDropdownOpen && (
+              <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
@@ -92,6 +101,7 @@ const DashboardLayout = () => {
                 <Link to="/dashboard/videos">Videos</Link>
               </li>
             </ul>
+            )}
           </div>
         </div>
         <div className="navbar-center hidden lg:flex">

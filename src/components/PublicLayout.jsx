@@ -1,5 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../redux/actions/authSlice";
 import { fetchVisitas } from "../redux/actions/visitasSlice";
@@ -14,6 +14,14 @@ const Home = () => {
   const visitas = useSelector((state) =>
     state.visitas.visitas.length > 0 ? state.visitas.visitas[0].idConexion : 0
   );
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("user");
@@ -46,50 +54,53 @@ const Home = () => {
       </div>
 
       <div className="navbar bg-[#8B0000]">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost lg:hidden text-white"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/">Inicio</Link>
-              </li>
-              <li>
-                <Link to="/torneos">Torneos</Link>
-              </li>
-              <li>
-                <Link to="/patrocinadores">Patrocinadores</Link>
-              </li>
-              <li>
-                <Link to="/servicios">Servicios</Link>
-              </li>
-              <li>
-                <Link to="/videos">Videos</Link>
-              </li>
-            </ul>
-          </div>
+      <div className="navbar-start">
+      <div className="dropdown">
+        <div
+          tabIndex={0}
+          role="button"
+          className="btn btn-ghost lg:hidden text-white"
+          onClick={toggleDropdown}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
         </div>
+        {isDropdownOpen && (
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-[#8B0000] text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
+          >
+            <li>
+              <Link to="/" onClick={closeDropdown}>Inicio</Link>
+            </li>
+            <li>
+              <Link to="/torneos" onClick={closeDropdown}>Torneos</Link>
+            </li>
+            <li>
+              <Link to="/patrocinadores" onClick={closeDropdown}>Patrocinadores</Link>
+            </li>
+            <li>
+              <Link to="/servicios" onClick={closeDropdown}>Servicios</Link>
+            </li>
+            <li>
+              <Link to="/videos" onClick={closeDropdown}>Videos</Link>
+            </li>
+          </ul>
+        )}
+      </div>
+      </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-white text-lg">
             <li>
@@ -129,21 +140,6 @@ const Home = () => {
       </div>
 
       <div className="hex-main-background hero bg-gradient-to-t from-[#1A1A2E] from-10% via-[#003366] via-30% to-[#1A1A2E] to-90% bg-cover bg-center min-h-screen">
-        {/* <div className="hero-content flex-col lg:flex-row card glass">
-          <img
-            src="https://i.pinimg.com/564x/ba/89/0f/ba890f0fb64a8795fc5135b48c785c2e.jpg"
-            className="max-w-sm rounded-lg shadow-2xl"
-          />
-          <div className="text-white">
-            <h1 className="text-5xl font-bold">Cristiano Ronaldo</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            <button className="btn btn-accent">Equipo</button>
-          </div>
-        </div> */}
         <Outlet />
       </div>
       {/* Footer*/}
