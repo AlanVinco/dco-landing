@@ -130,10 +130,10 @@ const LazyLoadIframe = ({ src }) => {
   }, []);
 
   return (
-    <div className="carousel-item h-full" ref={iframeRef}>
+    <div className="carousel-item h-full w-80 md:w-full" ref={iframeRef}>
       {isVisible ? (
         <iframe
-          className="lg:w-full aspect-video w-1/2"
+          className="lg:w-full aspect-video md:w-1/2 w-96"
           src={src}
           title={`video-${src}`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
