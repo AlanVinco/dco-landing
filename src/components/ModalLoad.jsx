@@ -1088,7 +1088,7 @@ const ModalLoad = ({ selectedOption }) => {
                 }
               >
                 <option value="" disabled selected>
-                  Selecciona Torneo
+                  Selecciona Partido
                 </option>
                 {partidos.map((partido) => (
                   <option
