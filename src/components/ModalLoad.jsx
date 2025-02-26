@@ -377,7 +377,7 @@ const ModalLoad = ({ selectedOption }) => {
     setGoleoTotal({ ...goleoData, idTorneo });
     // Obtener jugadores según el partido
     fetch(
-      `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendarioGoleo?idTorneo=${idTorneo}`
+      `https://www.dcoapi.somee.com/api/ObtenerDatos/ObtineCalendario?idTorneo=${idTorneo}`
     )
       .then((res) => res.json())
       .then((data) => setPartidos(data));
