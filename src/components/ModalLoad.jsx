@@ -68,6 +68,8 @@ const ModalLoad = ({ selectedOption }) => {
       idEquipoLocal: "",
       idEquipoVisita: "",
       idTorneo: "",
+      nombreLocal: "",
+      nombreVisita: "",
     });
     setGoleoData({
       idTorneo: "",
@@ -241,6 +243,7 @@ const ModalLoad = ({ selectedOption }) => {
       numeroCamisa,
       archivo,
     } = jugadorData;
+    //console.log("nombre: ", nombre, "apellidoPaterno: ", apellidoPaterno, "fechaNacimiento: ", fechaNacimiento, "posición: ", posicion, "sexo: ", sexo, "idEquipo: ", idEquipo, "numeroCamisa: ", numeroCamisa, "archivo: ", archivo)
 
     if (
       nombre &&
@@ -258,6 +261,7 @@ const ModalLoad = ({ selectedOption }) => {
           dispatch(
             relacionarJugadorEquipo({ idEquipo, idJugador, numeroCamisa })
           );
+          setEquipoData({ ...jugadorData, idEquipo: "", archivo: "" });
         }
       });
     } else {
@@ -365,6 +369,8 @@ const ModalLoad = ({ selectedOption }) => {
     idEquipoLocal: "",
     idEquipoVisita: "",
     idTorneo: "",
+    nombreLocal: "",
+    nombreVisita: "",
   });
 
   const [partidos, setPartidos] = useState([]); // Para listar partidos disponibles
@@ -920,6 +926,7 @@ const ModalLoad = ({ selectedOption }) => {
             className="file-input file-input-bordered w-full"
             accept=".jpg,.png"
             onChange={handleFileChange}
+            onClick={handleFileChange}
           />
           <button
             className="btn bg-[#1A1A2E] text-white hover:bg-[#8B0000] glass"
@@ -1084,6 +1091,8 @@ const ModalLoad = ({ selectedOption }) => {
                     idPartido: e.target.value.split("-")[0],
                     idEquipoLocal: e.target.value.split("-")[1],
                     idEquipoVisita: e.target.value.split("-")[2],
+                    nombreLocal: e.target.value.split("-")[3],
+                    nombreVisita: e.target.value.split("-")[4],
                   })
                 }
               >
@@ -1093,7 +1102,7 @@ const ModalLoad = ({ selectedOption }) => {
                 {partidos.map((partido) => (
                   <option
                     key={partido.idPartido}
-                    value={`${partido.idPartido}-${partido.idEquipoLocal}-${partido.idEquipoVisita}`}
+                    value={`${partido.idPartido}-${partido.idEquipoLocal}-${partido.idEquipoVisita}-${partido.nombreEquipoLocal}-${partido.nombreEquipoVisita}`}
                   >
                     {partido.nombreEquipoLocal} vs {partido.nombreEquipoVisita}
                   </option>
@@ -1116,7 +1125,7 @@ const ModalLoad = ({ selectedOption }) => {
                 <input
                   type="number"
                   name="golesLocal"
-                  placeholder="Goles equipo local"
+                  placeholder={`Goles equipo ${resultadoData.nombreLocal}`}
                   value={resultadoData.golesLocal}
                   onChange={handleResultadoInputChange}
                 />
@@ -1134,7 +1143,7 @@ const ModalLoad = ({ selectedOption }) => {
                 <input
                   type="number"
                   name="golesVisita"
-                  placeholder="Goles equipo visitante"
+                  placeholder={`Goles equipo ${resultadoData.nombreVisita}`}
                   value={resultadoData.golesVisita}
                   onChange={handleResultadoInputChange}
                 />
@@ -1201,7 +1210,7 @@ const ModalLoad = ({ selectedOption }) => {
                 }
               >
                 <option value="" disabled selected>
-                  Selecciona Torneo
+                  Selecciona Equipo
                 </option>
                 {partidos.map((partido) => (
                   <option

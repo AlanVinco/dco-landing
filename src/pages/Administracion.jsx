@@ -77,7 +77,7 @@ const AdminSelector = () => {
                 }}
                 value={"Ingresar Partido"}
               >
-                Ingresar Partido
+                Programar Juego
               </button>
             </li>
             <li>

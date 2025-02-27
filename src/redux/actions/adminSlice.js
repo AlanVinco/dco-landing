@@ -151,13 +151,55 @@ export const fetchJuegos = createAsyncThunk(
 export const registrarResultado = createAsyncThunk(
   "admin/registrarResultado",
   async (formData) => {
+    const { golesLocal, golesVisita } = formData;
+
+    // Calcular puntos y resultados basados en los goles
+    let puntosLocal, puntosVisita, ganadoLocal, perdidoLocal, empatadoLocal, ganadoVisita, perdidoVisita, empatadoVisita;
+
+    if (golesLocal > golesVisita) {
+      puntosLocal = 3;
+      puntosVisita = 0;
+      ganadoLocal = 1;
+      perdidoLocal = 0;
+      empatadoLocal = 0;
+      ganadoVisita = 0;
+      perdidoVisita = 1;
+      empatadoVisita = 0;
+    } else if (golesLocal < golesVisita) {
+      puntosLocal = 0;
+      puntosVisita = 3;
+      ganadoLocal = 0;
+      perdidoLocal = 1;
+      empatadoLocal = 0;
+      ganadoVisita = 1;
+      perdidoVisita = 0;
+      empatadoVisita = 0;
+    } else {
+      puntosLocal = 1;
+      puntosVisita = 1;
+      ganadoLocal = 0;
+      perdidoLocal = 0;
+      empatadoLocal = 1;
+      ganadoVisita = 0;
+      perdidoVisita = 0;
+      empatadoVisita = 1;
+    }
+
     const body = {
       idPartido: formData.idPartido,
       idTorneo: formData.idTorneo,
       idEquipoLocal: formData.idEquipoLocal,
       idEquipoVisita: formData.idEquipoVisita,
-      golesLocal: formData.golesLocal,
-      golesVisita: formData.golesVisita,
+      golesLocal: golesLocal,
+      golesVisita: golesVisita,
+      puntosLocal: puntosLocal,
+      puntosVisita: puntosVisita,
+      ganadoLocal: ganadoLocal,
+      perdidoLocal: perdidoLocal,
+      empatadoLocal: empatadoLocal,
+      ganadoVisita: ganadoVisita,
+      perdidoVisita: perdidoVisita,
+      empatadoVisita: empatadoVisita
     };
 
     const response = await axios.post(
